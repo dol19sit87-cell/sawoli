@@ -473,6 +473,9 @@
   .channels { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
 
   footer { border-top: 1px solid var(--line); padding: 20px 0 40px; font-size: 13px; color: var(--muted); }
+  footer p { margin: 0 0 8px; }
+  footer .legal-line { line-height: 1.5; max-width: 70ch; }
+  footer .privacy-link { color: var(--muted); text-underline-offset: 3px; }
 
   /* ---------- mobile sticky bar ---------- */
 
@@ -668,7 +671,11 @@
     <div class="channels" id="channels"></div>
   </div>
 
-  <footer><span id="footer-text">ODRA JET · Tbilisi. Prices in GEL.</span></footer>
+  <footer>
+    <p id="footer-text">ODRA JET · Tbilisi. Prices in GEL.</p>
+    <p class="legal-line" id="legal-line">Seller: Individual Entrepreneur Rodion Sitko, identification number 304824581. Address: Georgia, Tbilisi, Mtatsminda District, 19 Erekle Tatishvili Street, Entrance 2.</p>
+    <p><a class="privacy-link" href="privacy/" data-i18n="privacyLink">Privacy policy</a></p>
+  </footer>
 
 </div>
 
@@ -694,7 +701,17 @@ const CONFIG = {
   pixelId:    "",              // ID пикселя Meta, только цифры
 
   formEndpoint: "",            // пусто = отправка на свой же адрес (так работают Netlify Forms)
-  videoUrl: "",                // файл видео (например "video/cobrajet.mp4"); пусто = блок скрыт
+  // Реквизиты продавца — идут в подвал и в политику конфиденциальности
+  legal: {
+    seller:    "Individual Entrepreneur Rodion Sitko",
+    id:        "304824581",
+    regDate:   "07.08.2026",
+    authority: "LEPL National Agency of Public Registry",
+    address:   "Georgia, Tbilisi, Mtatsminda District, 19 Erekle Tatishvili Street, Entrance 2",
+    email:     ""            // почта для связи и отзыва согласия — обязательна к заполнению
+  },
+
+  videoUrl: "",                // файл видео (например "video/odra.mp4"); пусто = блок скрыт
   videoPoster: "",             // кадр-заставка, необязательно
 
   priceRetail:    249,         // цена за штуку, ₾
@@ -784,6 +801,8 @@ const I18N = {
     contactTitle: "დაგვიკავშირდით",
     contactText: "ვპასუხობთ დღის განმავლობაში — დაგეხმარებით ზომის შერჩევასა და მიწოდებაში.",
     chWa: "WhatsApp", chViber: "Viber", chMsg: "Messenger", chIg: "Instagram", chPhone: "დარეკვა",
+    privacyLink: "კონფიდენციალურობის პოლიტიკა",
+    legalLine: "გამყიდველი: {seller}, საიდენტიფიკაციო ნომერი {id}. მისამართი: {address}.",
     footer: "{brand} · თბილისი. ფასები ლარშია."
   },
   ru: {
@@ -850,6 +869,8 @@ const I18N = {
     contactTitle: "Связаться с нами",
     contactText: "Отвечаем в течение дня — подскажем по размеру и доставке.",
     chWa: "WhatsApp", chViber: "Viber", chMsg: "Messenger", chIg: "Instagram", chPhone: "Позвонить",
+    privacyLink: "Политика конфиденциальности",
+    legalLine: "Продавец: {seller}, идентификационный номер {id}. Адрес: {address}.",
     footer: "{brand} · Тбилиси. Цены указаны в лари."
   },
   en: {
@@ -916,6 +937,8 @@ const I18N = {
     contactTitle: "Get in touch",
     contactText: "We reply within the day — happy to advise on size and delivery.",
     chWa: "WhatsApp", chViber: "Viber", chMsg: "Messenger", chIg: "Instagram", chPhone: "Call",
+    privacyLink: "Privacy policy",
+    legalLine: "Seller: {seller}, identification number {id}. Address: {address}.",
     footer: "{brand} · Tbilisi. Prices in GEL."
   }
 };
@@ -948,7 +971,11 @@ const I18N = {
       "{eta}": CONFIG.eta[lang] || "",
       "{brand}": CONFIG.brand,
       "{min}": String(CONFIG.wholesaleMin),
-      "{price}": money(CONFIG.priceWholesale)
+      "{price}": money(CONFIG.priceWholesale),
+      "{seller}": CONFIG.legal.seller,
+      "{id}": CONFIG.legal.id,
+      "{address}": CONFIG.legal.address,
+      "{email}": CONFIG.legal.email
     };
     return Object.keys(pairs).reduce((s, k) => s.split(k).join(pairs[k]), String(str));
   }
@@ -1061,6 +1088,8 @@ const I18N = {
     document.getElementById("price-retail").textContent = money(CONFIG.priceRetail);
     document.getElementById("b2b-price").textContent = fill(t.b2bPrice);
     document.getElementById("footer-text").textContent = fill(t.footer);
+    const legalLine = document.getElementById("legal-line");
+    if (legalLine) legalLine.textContent = fill(t.legalLine);
     document.title = t.pageTitle;
     document.querySelectorAll(".lang").forEach(b => {
       b.setAttribute("aria-pressed", String(b.dataset.lang === lang));
