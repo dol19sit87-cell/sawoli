@@ -253,6 +253,7 @@
   .price-note { font-size: 13.5px; color: var(--muted); }
 
   .photo {
+    aspect-ratio: 520 / 693;
     border: 1px solid var(--line);
     border-radius: 3px;
     overflow: hidden;
@@ -570,17 +571,17 @@
       </div>
     </div>
     <div class="photo">
-      <img id="img-hero" src="../img/hero_ru.jpg" alt="Раскладушка с матрасом, 190×68×37 см, нагрузка до 150 кг" data-i18n-alt="altHero">
+      <img id="img-hero" src="../img/hero_ru.jpg" alt="" width="520" height="693" fetchpriority="high" data-i18n-alt="altHero">
     </div>
   </div>
 
-  <form class="lead-form lead-form--short" name="lead-top" method="POST" data-netlify="true">
+  <form class="lead-form lead-form--short" id="lead-top" name="lead-top" method="POST" data-netlify="true">
     <input type="hidden" name="form-name" value="lead-top">
     <input type="hidden" name="lang" value="">
     <input type="hidden" name="source" value="">
     <input type="hidden" name="campaign" value="">
     <input type="hidden" name="place" value="top">
-    <h2 data-i18n="shortFormTitle">Оставьте номер — свяжемся сами</h2>
+    <h2 data-i18n="shortFormTitle">Оставьте номер — перезвоним и всё расскажем</h2>
     <p class="sub" data-i18n="shortFormText">Два поля, займёт секунду. Подскажем по размеру и доставке.</p>
     <div class="short-row">
       <label class="sr"><span data-i18n="fName">Имя</span>
@@ -606,15 +607,15 @@
 
   <div class="gallery">
     <figure>
-      <img id="img-carry" src="../img/carry_ru.jpg" alt="Женщина несёт сложенную раскладушку в чехле на плече" data-i18n-alt="altCarry">
+      <img id="img-carry" src="../img/carry_ru.jpg" alt="" width="520" height="693" loading="lazy" data-i18n-alt="altCarry">
       <figcaption data-i18n="cap1">Складывается в чехол и уносится на плече</figcaption>
     </figure>
     <figure>
-      <img id="img-storage" src="../img/storage_ru.jpg" alt="Раскладушка в сложенном виде, 21×17×101 см" data-i18n-alt="altStorage">
+      <img id="img-storage" src="../img/storage_ru.jpg" alt="" width="520" height="693" loading="lazy" data-i18n-alt="altStorage">
       <figcaption data-i18n="cap2">В сложенном виде помещается и в шкаф, и в багажник</figcaption>
     </figure>
     <figure>
-      <img id="img-frame" src="../img/frame_ru.jpg" alt="Усиленный металлический каркас, выдерживает до 150 кг" data-i18n-alt="altFrame">
+      <img id="img-frame" src="../img/frame_ru.jpg" alt="" width="520" height="693" loading="lazy" data-i18n-alt="altFrame">
       <figcaption data-i18n="cap3">Усиленный каркас — выдерживает до 150 кг</figcaption>
     </figure>
   </div>
@@ -655,11 +656,10 @@
   <section>
     <h2 data-i18n="orderTitle">Как заказать</h2>
     <ol class="steps">
-      <li data-i18n="step1">Напишите в WhatsApp или Messenger либо позвоните — подтвердим срок и цвет.</li>
+      <li data-i18n="step1">Напишите в WhatsApp или Messenger либо позвоните — подтвердим наличие и доставку.</li>
       <li data-i18n="step2">Подтверждаем заказ в переписке — без предоплаты.</li>
       <li data-i18n="step3">Платите при получении, курьеру — наличными или переводом.</li>
     </ol>
-    <!-- Проверьте, что все три обещания вы действительно готовы выполнять; лишнее удалите. -->
     <div class="trust">
       <div data-i18n="trust1">Оплата при получении</div>
       <div data-i18n="trust2">Возврат в течение 14 дней</div>
@@ -712,6 +712,7 @@
 <div class="mobile-bar" id="mobile-bar">
   <span class="bar-price" id="bar-price"></span>
   <a class="btn btn-primary" data-cta="chat-sticky" href="#" data-i18n="ctaChat">Написать нам</a>
+  <a class="btn btn-primary" id="bar-form" href="#lead-top" data-i18n="ctaLeaveNumber">Оставить номер</a>
 </div>
 
 <script>
@@ -741,8 +742,8 @@ const CONFIG = {
     email:     ""            // почта для связи и отзыва согласия — обязательна к заполнению
   },
 
-  videoUrl: "",                // файл видео (например "video/odra.mp4"); пусто = блок скрыт
-  videoPoster: "",             // кадр-заставка, необязательно
+  videoUrl: "../video/odra.mp4",  // пусто = блок скрыт
+  videoPoster: "../video/odra-poster.jpg",
 
   priceRetail:    249,         // цена за штуку, ₾
   priceWholesale: 229,         // оптовая цена за штуку, ₾
@@ -753,13 +754,6 @@ const CONFIG = {
   // значит аккаунт есть у всех, и все заявки падают в один инбокс страницы.
   // WhatsApp при этом остаётся в блоке контактов внизу — для тех, кому так привычнее.
   primaryChannel: { ka: "messenger", ru: "messenger", en: "messenger" },
-
-  // Когда приходит партия — пишите как есть, тремя языками.
-  eta: {
-    ka: "სექტემბრის ბოლოს",
-    ru: "в конце сентября",
-    en: "in late September"
-  }
 };
 
 /* ================================================================
@@ -775,6 +769,8 @@ const I18N = {
     ctaWa: "მოგვწერეთ WhatsApp-ზე",
     ctaMsg: "მოგვწერეთ Messenger-ზე",
     ctaChat: "მოგვწერეთ",
+    ctaLeaveNumber: "დატოვეთ ნომერი",
+    fNoEndpoint: "ფორმა ჯერ არ არის ჩართული. მოგვწერეთ მესენჯერში.",
     ctaViber: "მოგვწერეთ Viber-ზე",
     pageTitle: "დასაკეცი საწოლი მატრასით — თბილისი",
     langName: "ქართული",
@@ -795,7 +791,7 @@ const I18N = {
     cap1: "იკეცება ჩანთაში და მხარზე გადაიკიდება",
     cap2: "დაკეცილი ეტევა კარადაშიც და საბარგულშიც",
     cap3: "გამაგრებული კარკასი — უძლებს 150 კგ-მდე",
-    proof: "ცალი ამ სერიის საწოლი გაყიდულია ონლაინ, რეიტინგი 4.9 და 2300-ზე მეტი შეფასება. ჩვენ იმავე მოდელს თბილისში ჩამოგიტანთ — ულოდნელად, საზღვარგარეთის მიწოდების გარეშე: ნახავთ და გადაიხდით კურიერთან.",
+    proof: "ცალი ამ სერიის საწოლი გაყიდულია ონლაინ, რეიტინგი 4.9 და 2300-ზე მეტი შეფასება. ჩვენ იმავე მოდელს თბილისში ჩამოგიტანთ — ლოდინისა და საზღვარგარეთიდან მიწოდების გარეშე: ნახავთ და გადაიხდით კურიერთან.",
     b2bTitle: "ჰოსტელი, საოჯახო სასტუმრო ან ოფისი?",
     b2bPrice: "საბითუმო ფასი {min} ცალიდან — {price} ცალზე",
     b2bText: "ნიმუშს უფასოდ მოგიტანთ თბილისში, რომ ადგილზე ნახოთ და მერე გადაწყვიტოთ. პარტიაზე ვადას და ფასს ინდივიდუალურად შევათანხმებთ.",
@@ -810,7 +806,7 @@ const I18N = {
     who3t: "დამატებითი საძინებელი ადგილი",
     who3p: "ქირით ბინაში, საბავშვო ოთახში ან დროებით საცხოვრებელში — სადაც მუდმივი საწოლისთვის ადგილი არ არის.",
     orderTitle: "როგორ შევუკვეთოთ",
-    step1: "მოგვწერეთ WhatsApp-ზე ან Messenger-ზე, ან დაგვირეკეთ — დაგიდასტურებთ ვადას და ფერს.",
+    step1: "მოგვწერეთ WhatsApp-ზე ან Messenger-ზე — დაგიდასტურებთ ხელმისაწვდომობას და მიწოდებას.",
     step2: "შეკვეთას ვადასტურებთ მიმოწერაში — წინასწარი გადახდის გარეშე.",
     step3: "გადაიხდით მიღებისას, კურიერთან — ნაღდი ან გადარიცხვით.",
     trust1: "გადახდა მიღებისას",
@@ -829,7 +825,7 @@ const I18N = {
     fConsent: "ღილაკზე დაჭერით თანხმდებით, რომ ნომერი დამუშავდეს თქვენთან დასაკავშირებლად.",
     fSubmit: "დამიკავშირდით",
     fOk: "მადლობა! მივიღეთ თქვენი ნომერი და დღის განმავლობაში დაგიკავშირდებით.",
-    fErr: "გაგზავნა ვერ მოხერხდა. მოგვწერეთ მესენჯერში ან დაგვირეკეთ.",
+    fErr: "გაგზავნა ვერ მოხერხდა. სცადეთ მოგვიანებით ან მოგვწერეთ მესენჯერში.",
     contactTitle: "დაგვიკავშირდით",
     contactText: "ვპასუხობთ დღის განმავლობაში — დაგეხმარებით ზომის შერჩევასა და მიწოდებაში.",
     chWa: "WhatsApp", chViber: "Viber", chMsg: "Messenger", chIg: "Instagram", chPhone: "დარეკვა",
@@ -845,6 +841,8 @@ const I18N = {
     ctaWa: "Написать в WhatsApp",
     ctaMsg: "Написать в Messenger",
     ctaChat: "Написать нам",
+    ctaLeaveNumber: "Оставить номер",
+    fNoEndpoint: "Форма ещё не подключена. Напишите нам в мессенджер.",
     ctaViber: "Написать в Viber",
     pageTitle: "Раскладушка с матрасом — Тбилиси",
     langName: "Русский",
@@ -880,13 +878,13 @@ const I18N = {
     who3t: "Доп. спальное место",
     who3p: "Для съёмной квартиры, детской или временного жилья — там, где стационарная кровать не оправдана.",
     orderTitle: "Как заказать",
-    step1: "Напишите в WhatsApp или Messenger либо позвоните — подтвердим срок и цвет.",
+    step1: "Напишите в WhatsApp или Messenger либо позвоните — подтвердим наличие и доставку.",
     step2: "Подтверждаем заказ в переписке — без предоплаты.",
     step3: "Платите при получении, курьеру — наличными или переводом.",
     trust1: "Оплата при получении",
     trust2: "Возврат в течение 14 дней",
     trust3: "Гарантия на каркас 12 месяцев",
-    shortFormTitle: "Оставьте номер — свяжемся сами",
+    shortFormTitle: "Оставьте номер — перезвоним и всё расскажем",
     shortFormText: "Два поля, займёт секунду. Подскажем по размеру и доставке.",
     formTitle: "Оставьте номер — свяжемся сами",
     formText: "Если писать в мессенджер неудобно, оставьте номер и укажите, как вам ответить.",
@@ -915,6 +913,8 @@ const I18N = {
     ctaWa: "Message on WhatsApp",
     ctaMsg: "Message on Messenger",
     ctaChat: "Message us",
+    ctaLeaveNumber: "Leave your number",
+    fNoEndpoint: "The form is not connected yet. Please message us instead.",
     ctaViber: "Message on Viber",
     pageTitle: "Folding bed with mattress — Tbilisi",
     langName: "English",
@@ -950,7 +950,7 @@ const I18N = {
     who3t: "An extra bed",
     who3p: "For a rented flat, a kids' room or temporary housing — where a permanent bed makes no sense.",
     orderTitle: "How to order",
-    step1: "Message us on WhatsApp or Messenger, or call — we confirm timing and colour.",
+    step1: "Message us on WhatsApp or Messenger, or call — we confirm availability and delivery.",
     step2: "We confirm the order in chat — no prepayment.",
     step3: "You pay on delivery, to the courier — cash or bank transfer.",
     trust1: "Payment on delivery",
@@ -1004,7 +1004,6 @@ const I18N = {
     const t = I18N[lang];
     const pairs = {
       "{delivery}": CONFIG.deliveryTbilisi > 0 ? money(CONFIG.deliveryTbilisi) : t.deliveryFree,
-      "{eta}": CONFIG.eta[lang] || "",
       "{brand}": CONFIG.brand,
       "{min}": String(CONFIG.wholesaleMin),
       "{price}": money(CONFIG.priceWholesale),
@@ -1139,6 +1138,7 @@ const I18N = {
       if (CONFIG.videoUrl) {
         vid.src = CONFIG.videoUrl;
         if (CONFIG.videoPoster) vid.poster = CONFIG.videoPoster;
+        vid.onerror = () => { vs.hidden = true; };   // нет файла (например в превью) — блока нет
         vs.hidden = false;
       } else {
         vs.hidden = true;
@@ -1146,22 +1146,30 @@ const I18N = {
     }
     const barPrice = document.getElementById("bar-price");
     if (barPrice) barPrice.textContent = money(CONFIG.priceRetail);
+    const barForm = document.getElementById("bar-form");
+    if (barForm) barForm.hidden = !!resolveChat();   // есть мессенджер — ведём в него, нет — к форме
     const callOption = document.querySelector('.prefer input[value="call"]');
     if (callOption) callOption.closest("label").hidden = (lang === "ka");
     const primaryRadio = document.querySelector('.prefer input[value="' + (resolveChat() || "whatsapp") + '"]');
     if (primaryRadio) primaryRadio.checked = true;
     buildChannels();
     applyLinks();
+    const anyChannel = !!(CONFIG.whatsapp || CONFIG.messenger || CONFIG.viber || CONFIG.phone || CONFIG.instagram);
+    const contact = document.querySelector(".contact");
+    if (contact) contact.hidden = !anyChannel;
+    document.querySelectorAll(".inline-cta").forEach(p => {
+      p.hidden = ![...p.querySelectorAll("a")].some(a => !a.hidden);
+    });
   }
 
   /* пока кнопка в герое на экране, липкая панель не нужна */
   (function tuckBar() {
     const bar = document.getElementById("mobile-bar");
-    const heroCta = document.querySelector(".hero .cta-row");
-    if (!bar || !heroCta || !("IntersectionObserver" in window)) return;
+    const anchor = document.querySelector(".hero .price-block");
+    if (!bar || !anchor || !("IntersectionObserver" in window)) return;
     new IntersectionObserver(es => {
       bar.classList.toggle("tucked", es[0].isIntersecting);
-    }, { threshold: 0.4 }).observe(heroCta);
+    }, { threshold: 0.6 }).observe(anchor);
   })();
 
   document.querySelectorAll("form.lead-form").forEach(form => {
@@ -1174,7 +1182,13 @@ const I18N = {
     form.querySelector('[name="source"]').value = SRC;
     form.querySelector('[name="campaign"]').value = CAMPAIGN || "none";
     const body = new URLSearchParams(new FormData(form)).toString();
-    const endpoint = CONFIG.formEndpoint || "/";
+    const endpoint = CONFIG.formEndpoint;
+    if (!endpoint) {
+      formMsg.className = "form-msg err";
+      formMsg.textContent = t.fNoEndpoint;
+      formMsg.hidden = false;
+      return;
+    }
     try {
       const r = await fetch(endpoint, {
         method: "POST",
