@@ -1064,10 +1064,12 @@ const I18N = {
     return "https://wa.me/" + CONFIG.whatsapp + "?text=" + encodeURIComponent(text);
   }
 
-  function track(channel) {
+  /* event — имя события для пикселя. Contact = клик по каналу связи, Lead = отправленная форма.
+     Клик по мессенджеру заявкой не считается: иначе конверсия завышена в разы. */
+  function track(event, channel) {
     const meta = { content_name: channel, source: SRC, lang: lang, campaign: CAMPAIGN || "none" };
-    if (window.fbq) window.fbq("track", "Lead", meta);
-    if (window.gtag) window.gtag("event", "generate_lead", meta);
+    if (window.fbq) window.fbq("track", event, meta);
+    if (window.gtag) window.gtag("event", event === "Lead" ? "generate_lead" : "contact", meta);
   }
 
   function resolveChat() {
@@ -1076,7 +1078,21 @@ const I18N = {
     return order.find(c => CONFIG[c]) || (CONFIG[want] ? want : null);
   }
 
-  function hrefFor(channel, b2b) {
+  /* Куда ведут главные кнопки в режиме formFirst.
+     chat-book стоит выше нижней формы — ведём в неё, а не назад к верхней. */
+  const FORM_ANCHOR = { "chat": "#lead-top", "chat-sticky": "#lead-top", "chat-book": "#lead-form" };
+
+  /* Плавно доводим до формы, не трогая историю браузера: hash в адрес не пишется,
+     «назад» по-прежнему уводит на предыдущую страницу. */
+  function scrollToForm(ev, sel) {
+    const target = document.querySelector(sel);
+    if (!target) return;               // формы нет — пусть браузер отработает якорь сам
+    ev.preventDefault();
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function hrefFor(channel, b2b, anchor) {
+    if (channel === "form") return anchor || "#lead-top";
     if (channel === "whatsapp") return CONFIG.whatsapp ? waLink(b2b ? b2bText() : waText()) : null;
     if (channel === "messenger") {
       const ref = [b2b ? "b2b" : null, lang, SRC, CAMPAIGN || null].filter(Boolean).join("-");
@@ -1095,21 +1111,30 @@ const I18N = {
       const kind = el.dataset.cta;
       const isChat = kind.startsWith("chat");
       const b2b = kind === "chat-b2b";
-      const channel = isChat ? resolveChat() : kind.split("-")[0];
+      /* Главные кнопки ведут на форму: нужны имя и телефон на сайте, а не переписка.
+         chat-fit («подскажем, влезет ли») и chat-b2b («привезите образец») остаются
+         в мессенджере — это приглашения к разговору, а поля для сообщения в форме нет. */
+      const anchor = CONFIG.formFirst ? FORM_ANCHOR[kind] : null;
+      const channel = anchor ? "form" : (isChat ? resolveChat() : kind.split("-")[0]);
       const noCallHere = channel === "phone" && lang === "ka";   // по-грузински мы не говорим
-      const href = channel && !noCallHere ? hrefFor(channel, b2b) : null;
+      const href = channel && !noCallHere ? hrefFor(channel, b2b, anchor) : null;
       if (href) {
         el.href = href;
         el.hidden = false;
-        if (channel === "phone" || channel === "viber") {
+        if (channel === "phone" || channel === "viber" || channel === "form") {
           el.removeAttribute("target");
           el.removeAttribute("rel");
         } else {
           el.target = "_blank";
           el.rel = "noopener";
         }
-        if ((kind === "chat" || kind === "chat-sticky") && chatLabel[channel]) el.textContent = chatLabel[channel];
-        el.onclick = () => track(channel + (b2b ? "-b2b" : ""));
+        if (kind === "chat" || kind === "chat-sticky") {
+          if (channel === "form") el.textContent = t.ctaLeaveNumber;
+          else if (chatLabel[channel]) el.textContent = chatLabel[channel];
+        }
+        el.onclick = channel === "form"
+          ? (ev => scrollToForm(ev, href))
+          : (() => track("Contact", channel + (b2b ? "-b2b" : "")));
       } else {
         el.hidden = true;
         el.removeAttribute("href");
@@ -1174,7 +1199,8 @@ const I18N = {
     const barPrice = document.getElementById("bar-price");
     if (barPrice) barPrice.textContent = money(CONFIG.priceRetail);
     const barForm = document.getElementById("bar-form");
-    if (barForm) barForm.hidden = !!resolveChat();   // есть мессенджер — ведём в него, нет — к форме
+    // в режиме формы соседняя chat-sticky уже ведёт на форму — второй такой же кнопки не надо
+    if (barForm) barForm.hidden = CONFIG.formFirst ? true : !!resolveChat();
     const callOption = document.querySelector('.prefer input[value="call"]');
     if (callOption) callOption.closest("label").hidden = (lang === "ka");
     const primaryRadio = document.querySelector('.prefer input[value="' + (resolveChat() || "whatsapp") + '"]');
@@ -1223,7 +1249,7 @@ const I18N = {
         body: body
       });
       if (!r.ok) throw new Error(r.status);
-      track("form-" + (form.querySelector('[name="place"]') ? "top" : "bottom"));
+      track("Lead", "form-" + (form.querySelector('[name="place"]') ? "top" : "bottom"));
       form.textContent = "";
       const ok = document.createElement("p");
       ok.className = "form-msg";
