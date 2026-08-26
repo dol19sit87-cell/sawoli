@@ -478,7 +478,25 @@
   }
   .contact h2 { margin-bottom: 8px; }
   .contact p { color: var(--muted); margin: 0 0 22px; }
-  .channels { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .cookie-bar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
+    gap: 8px 18px;
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    box-shadow: 0 -6px 22px rgba(0, 0, 0, .10);
+  }
+  .cookie-bar[hidden] { display: none; }
+  .cookie-bar p { margin: 0; max-width: 720px; font-size: 13.5px; line-height: 1.45; color: var(--muted); }
+  .cookie-actions { display: flex; gap: 8px; flex-shrink: 0; }
+  .cookie-actions .btn { padding: 9px 18px; font-size: 14px; }
+  @media (max-width: 760px) {
+    .cookie-bar { gap: 8px 10px; padding: 10px 14px calc(10px + env(safe-area-inset-bottom)); }
+    .cookie-bar p { font-size: 12.5px; line-height: 1.4; }
+    .cookie-actions { width: 100%; }
+    .cookie-actions .btn { flex: 1; justify-content: center; padding: 9px 10px; }
+  }
 
   footer { border-top: 1px solid var(--line); padding: 20px 0 40px; font-size: 13px; color: var(--muted); }
   footer p { margin: 0 0 8px; }
@@ -508,11 +526,13 @@
     .gallery figure.wide { grid-column: auto; }
     .gallery figure { max-width: 420px; margin: 0 auto; }
     .trust { grid-template-columns: 1fr; }
-    body { padding-bottom: 120px; }
+    body { padding-bottom: calc(120px + var(--cookie-h, 0px)); }
     .mobile-bar {
       display: flex;
       position: fixed;
-      left: 0; right: 0; bottom: 0;
+      left: 0; right: 0;
+      /* баннер согласия стоит внизу — главная кнопка сайта поднимается над ним */
+      bottom: var(--cookie-h, 0px);
       z-index: 30;
       gap: 8px;
       padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
@@ -559,7 +579,7 @@
       <h1 data-i18n="h1">Раскладушка с матрасом — готовое спальное место для гостей</h1>
       <p class="lede" data-i18n="lede">Складывается за секунды, не требует сборки. Выдерживает до 150 кг. Матрас 6 см с синтепоновым наполнителем. В комплекте — чехол.</p>
       <div class="cta-row">
-        <a class="btn btn-primary" data-cta="chat" href="#" data-i18n="ctaChat">Написать нам</a>
+        <a class="btn btn-primary" data-cta="chat" href="#" data-i18n="ctaLeaveNumber">Оставить номер</a>
         <a class="btn btn-ghost" data-cta="phone" href="#" data-i18n="ctaCall">Позвонить</a>
       </div>
       <div class="price-block">
@@ -575,7 +595,7 @@
   </div>
 
   <form class="lead-form lead-form--short" id="lead-top" name="lead-top" method="POST">
-    <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+    <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none">
     <input type="hidden" name="lang" value="">
     <input type="hidden" name="source" value="">
     <input type="hidden" name="campaign" value="">
@@ -610,7 +630,7 @@
     <p class="video-note" data-i18n="videoNote">Видео снято нами, на этой же модели.</p>
   </section>
 
-  <p class="inline-cta"><a data-cta="chat-fit" href="#" data-i18n="ctaFit">Напишите — подскажем, влезет ли в вашу комнату →</a></p>
+  <p class="inline-cta"><a data-cta="chat-fit" href="#" data-i18n="ctaFit">Оставьте номер — подскажем, влезет ли в вашу комнату →</a></p>
 
   <div class="gallery">
     <figure class="wide">
@@ -646,7 +666,7 @@
       <h2 data-i18n="b2bTitle">Хостел, гестхаус или офис?</h2>
       <p class="b2b-price" id="b2b-price">Оптовая цена от 5 штук — 229 ₾ за штуку</p>
       <p data-i18n="b2bText">Привезём образец в Тбилиси бесплатно — посмотрите вживую и решите. Сроки и цену на партию согласуем отдельно.</p>
-      <a class="btn btn-primary" data-cta="chat-b2b" href="#" data-i18n="b2bCta">Привезите образец в мой хостел</a>
+      <a class="btn btn-primary" data-cta="chat-b2b" href="#" data-i18n="b2bCta">Оставьте номер — привезём образец</a>
     </div>
   </section>
 
@@ -662,8 +682,8 @@
   <section>
     <h2 data-i18n="orderTitle">Как заказать</h2>
     <ol class="steps">
-      <li data-i18n="step1">Напишите в WhatsApp или Messenger либо позвоните — подтвердим наличие и доставку.</li>
-      <li data-i18n="step2">Подтверждаем заказ в переписке — без предоплаты.</li>
+      <li data-i18n="step1">Оставьте имя и номер в форме — перезвоним и подтвердим наличие и доставку.</li>
+      <li data-i18n="step2">Подтверждаем заказ в разговоре — без предоплаты.</li>
       <li data-i18n="step3">Платите при получении, курьеру — наличными или переводом. Отправляем в любой город Грузии.</li>
     </ol>
     <div class="trust">
@@ -674,12 +694,13 @@
 
   <section>
     <form class="lead-form" name="lead" method="POST" id="lead-form">
-      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
+      <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none">
       <input type="hidden" name="lang" id="f-lang" value="">
       <input type="hidden" name="source" id="f-source" value="">
       <input type="hidden" name="campaign" id="f-campaign" value="">
+      <input type="hidden" name="place" value="bottom">
       <h2 data-i18n="formTitle">Оставьте номер — свяжемся сами</h2>
-      <p class="sub" data-i18n="formText">Если писать в мессенджер неудобно, оставьте номер и укажите, как вам ответить.</p>
+      <p class="sub" data-i18n="formText">Оставьте номер и укажите, как вам ответить.</p>
       <label><span data-i18n="fName">Имя</span>
         <input type="text" name="name" required autocomplete="name">
       </label>
@@ -689,8 +710,8 @@
       <div>
         <p class="sub" style="margin-bottom:8px" data-i18n="fPrefer">Как вам ответить?</p>
         <div class="prefer">
-          <label><input type="radio" name="prefer" value="viber" checked><span data-i18n="fViber">В Viber</span></label>
-          <label><input type="radio" name="prefer" value="whatsapp"><span data-i18n="fWa">В WhatsApp</span></label>
+          <label><input type="radio" name="prefer" value="viber"><span data-i18n="fViber">В Viber</span></label>
+          <label><input type="radio" name="prefer" value="whatsapp" checked><span data-i18n="fWa">В WhatsApp</span></label>
           <label><input type="radio" name="prefer" value="call"><span data-i18n="fCall">Звонком</span></label>
         </div>
       </div>
@@ -700,10 +721,6 @@
     </form>
   </section>
 
-  <div class="contact">
-    <h2 data-i18n="contactTitle">Связаться с нами</h2>
-    <p data-i18n="contactText">Отвечаем в течение дня — подскажем по размеру и доставке.</p>
-    <div class="channels" id="channels"></div>
   </div>
 
   <footer>
@@ -716,8 +733,18 @@
 
 <div class="mobile-bar" id="mobile-bar">
   <span class="bar-price" id="bar-price"></span>
-  <a class="btn btn-primary" data-cta="chat-sticky" href="#" data-i18n="ctaChat">Написать нам</a>
+  <a class="btn btn-primary" data-cta="chat-sticky" href="#" data-i18n="ctaLeaveNumber">Оставить номер</a>
   <a class="btn btn-primary" id="bar-form" href="#lead-top" data-i18n="ctaLeaveNumber">Оставить номер</a>
+</div>
+
+
+<!-- Баннер согласия. Пиксель Meta не инициализируется, пока посетитель не нажал «принять». -->
+<div class="cookie-bar" id="cookie-bar" role="region" aria-label="cookie" hidden>
+  <p><span data-i18n="cookieText">Чтобы оценивать рекламу, мы используем cookie Meta. Они включаются только после вашего согласия.</span> <a class="privacy-link" href="privacy/" data-i18n="privacyLink">Политика конфиденциальности</a></p>
+  <div class="cookie-actions">
+    <button class="btn btn-ghost" type="button" id="cookie-no" data-i18n="cookieNo">Отклонить</button>
+    <button class="btn btn-primary" type="button" id="cookie-yes" data-i18n="cookieYes">Принять</button>
+  </div>
 </div>
 
 <script>
@@ -736,8 +763,14 @@ const CONFIG = {
   instagram:  "",              // имя профиля без @
   pixelId:    "1047116104717565",  // ID пикселя Meta, только цифры
 
-  formEndpoint: "",            // URL Formspree вида https://formspree.io/f/xxxxxxxx. Пусто = форма не отправляется.
+  // Приём заявок — Web3Forms. Ключ публичный, он и должен лежать в клиентском коде.
+  formEndpoint: "https://api.web3forms.com/submit",     // submit-эндпоинт Web3Forms. Пусто = форма не отправляется.
+  formKey:      "858bfd05-1546-4770-8d27-63a561736a6f", // access_key Web3Forms
   formFirst: true,             // true = главные кнопки ведут на форму, а не в мессенджер
+
+  // Какая радиокнопка «как с вами связаться» отмечена по умолчанию: viber | whatsapp | call.
+  // Обследование 2024 года (Georgia Media Consumption Survey): WhatsApp 29 %, Viber 27 %.
+  preferDefault: "whatsapp",
   // Реквизиты продавца — идут в подвал и в политику конфиденциальности
   legal: {
     seller:    "Individual Entrepreneur Rodion Sitko",
@@ -756,9 +789,8 @@ const CONFIG = {
   wholesaleMin:   5,           // от скольки штук опт
   deliveryTbilisi: 15,         // доставка по Тбилиси, ₾ (0 = бесплатно)
 
-  // Главная кнопка на странице. Сейчас везде Messenger: трафик идёт из Facebook,
-  // значит аккаунт есть у всех, и все заявки падают в один инбокс страницы.
-  // WhatsApp при этом остаётся в блоке контактов внизу — для тех, кому так привычнее.
+  // Запасной канал на случай, если formFirst выключат. Пока formFirst = true,
+  // на странице нет ни одной кнопки в мессенджер: единственный путь — форма.
   primaryChannel: { ka: "messenger", ru: "messenger", en: "messenger" },
 };
 
@@ -776,14 +808,14 @@ const I18N = {
     ctaMsg: "მოგვწერეთ Messenger-ზე",
     ctaChat: "მოგვწერეთ",
     ctaLeaveNumber: "დატოვეთ ნომერი",
-    fNoEndpoint: "ფორმა ჯერ არ არის ჩართული. მოგვწერეთ მესენჯერში.",
+    fNoEndpoint: "ფორმა ჯერ არ არის ჩართული. სცადეთ ცოტა ხანში.",
     ctaViber: "მოგვწერეთ Viber-ზე",
     pageTitle: "დასაკეცი საწოლი მატრასით — თბილისი",
     langName: "ქართული",
     deliveryFree: "უფასოდ",
     ctaCall: "დარეკვა",
     priceNote: "ერთი ცალის ფასი. მიწოდება თბილისში — {delivery}, საქართველოს სხვა ქალაქებში — კურიერით. გადახდა მიღებისას.",
-    ctaFit: "დაწერეთ და გკითხავთ — ჩაეტევა თუ არა თქვენს ოთახში →",
+    ctaFit: "დატოვეთ ნომერი — გეტყვით, ჩაეტევა თუ არა თქვენს ოთახში →",
     ctaBook: "შეუკვეთეთ — გადახდა მიღებისას",
     altHero: "დასაკეცი საწოლი მატრასით, 190×68×37 სმ, დატვირთვა 150 კგ-მდე",
     altFrame: "გამაგრებული მეტალის კარკასი, უძლებს 150 კგ-მდე",
@@ -804,7 +836,7 @@ const I18N = {
     b2bTitle: "ჰოსტელი, საოჯახო სასტუმრო ან ოფისი?",
     b2bPrice: "საბითუმო ფასი {min} ცალიდან — {price} ცალზე",
     b2bText: "ნიმუშს უფასოდ მოგიტანთ თბილისში, რომ ადგილზე ნახოთ და მერე გადაწყვიტოთ. პარტიაზე ვადას და ფასს ინდივიდუალურად შევათანხმებთ.",
-    b2bCta: "ნიმუში ჩემს ჰოსტელში მოიტანეთ",
+    b2bCta: "დატოვეთ ნომერი — ნიმუშს მოგიტანთ",
     videoTitle: "როგორ გამოიყურება სინამდვილეში",
     videoNote: "ვიდეო გადაღებულია ჩვენ მიერ, იმავე მოდელზე.",
     whoTitle: "ვის გამოადგება",
@@ -815,15 +847,15 @@ const I18N = {
     who3t: "დამატებითი საძინებელი ადგილი",
     who3p: "ქირით ბინაში, საბავშვო ოთახში ან დროებით საცხოვრებელში — სადაც მუდმივი საწოლისთვის ადგილი არ არის.",
     orderTitle: "როგორ შევუკვეთოთ",
-    step1: "მოგვწერეთ WhatsApp-ზე ან Messenger-ზე — დაგიდასტურებთ ხელმისაწვდომობას და მიწოდებას.",
-    step2: "შეკვეთას ვადასტურებთ მიმოწერაში — წინასწარი გადახდის გარეშე.",
+    step1: "დატოვეთ სახელი და ნომერი ფორმაში — დაგირეკავთ და დაგიდასტურებთ ხელმისაწვდომობასა და მიწოდებას.",
+    step2: "შეკვეთას ვადასტურებთ სატელეფონო საუბარში — წინასწარი გადახდის გარეშე.",
     step3: "გადაიხდით მიღებისას, კურიერთან — ნაღდი ან გადარიცხვით. ვაგზავნით საქართველოს ნებისმიერ ქალაქში.",
     trust1: "გადახდა მიღებისას",
     trust2: "დაბრუნება 14 დღის განმავლობაში",
     shortFormTitle: "დატოვეთ ნომერი — დაგიკავშირდებით",
     shortFormText: "ორი ველი, წამის საქმეა. გირჩევთ ზომაში და მიწოდებაში.",
     formTitle: "დატოვეთ ნომერი — ჩვენ დაგიკავშირდებით",
-    formText: "თუ მესენჯერით წერა არ გსურთ, დატოვეთ ნომერი და მიუთითეთ, როგორ დაგიკავშირდეთ.",
+    formText: "დატოვეთ ნომერი და მიუთითეთ, როგორ დაგიკავშირდეთ.",
     fName: "სახელი",
     fPhone: "ტელეფონის ნომერი",
     fPrefer: "როგორ დაგიკავშირდეთ?",
@@ -833,11 +865,11 @@ const I18N = {
     fConsent: "ღილაკზე დაჭერით თანხმდებით, რომ ნომერი დამუშავდეს თქვენთან დასაკავშირებლად და ჰეშირებული სახით გადაეცეს Meta-ს რეკლამის შესაფასებლად.",
     fSubmit: "დამიკავშირდით",
     fOk: "მადლობა! მივიღეთ თქვენი ნომერი და დღის განმავლობაში დაგიკავშირდებით.",
-    fErr: "გაგზავნა ვერ მოხერხდა. სცადეთ მოგვიანებით ან მოგვწერეთ მესენჯერში.",
-    contactTitle: "დაგვიკავშირდით",
-    contactText: "ვპასუხობთ დღის განმავლობაში — დაგეხმარებით ზომის შერჩევასა და მიწოდებაში.",
-    chWa: "WhatsApp", chViber: "Viber", chMsg: "Messenger", chIg: "Instagram", chPhone: "დარეკვა",
+    fErr: "გაგზავნა ვერ მოხერხდა. სცადეთ ხელახლა ცოტა ხანში.",
     privacyLink: "კონფიდენციალურობის პოლიტიკა",
+    cookieText: "რეკლამის შესაფასებლად ვიყენებთ Meta-ს cookie-ფაილებს. ისინი ჩაირთვება მხოლოდ თქვენი თანხმობის შემდეგ.",
+    cookieYes: "თანხმობა",
+    cookieNo: "უარი",
     legalLine: "გამყიდველი: {seller}, საიდენტიფიკაციო ნომერი {id}. მისამართი: {address}.",
     footer: "{brand} · თბილისი. ფასები ლარშია."
   },
@@ -850,14 +882,14 @@ const I18N = {
     ctaMsg: "Написать в Messenger",
     ctaChat: "Написать нам",
     ctaLeaveNumber: "Оставить номер",
-    fNoEndpoint: "Форма ещё не подключена. Напишите нам в мессенджер.",
+    fNoEndpoint: "Форма ещё не подключена. Попробуйте чуть позже.",
     ctaViber: "Написать в Viber",
     pageTitle: "Раскладушка с матрасом — Тбилиси",
     langName: "Русский",
     deliveryFree: "бесплатно",
     ctaCall: "Позвонить",
     priceNote: "Цена за штуку. Доставка по Тбилиси — {delivery}, по остальной Грузии — курьерской службой. Оплата при получении.",
-    ctaFit: "Напишите — подскажем, влезет ли в вашу комнату →",
+    ctaFit: "Оставьте номер — подскажем, влезет ли в вашу комнату →",
     ctaBook: "Заказать — оплата при получении",
     altHero: "Раскладушка с матрасом, 190×68×37 см, нагрузка до 150 кг",
     altFrame: "Усиленный металлический каркас, выдерживает до 150 кг",
@@ -878,7 +910,7 @@ const I18N = {
     b2bTitle: "Хостел, гестхаус или офис?",
     b2bPrice: "Оптовая цена от {min} штук — {price} за штуку",
     b2bText: "Привезём образец в Тбилиси бесплатно — посмотрите вживую и решите. Сроки и цену на партию согласуем отдельно.",
-    b2bCta: "Привезите образец в мой хостел",
+    b2bCta: "Оставьте номер — привезём образец",
     videoTitle: "Как это выглядит вживую",
     videoNote: "Видео снято нами, на этой же модели.",
     whoTitle: "Кому пригодится",
@@ -889,15 +921,15 @@ const I18N = {
     who3t: "Доп. спальное место",
     who3p: "Для съёмной квартиры, детской или временного жилья — там, где стационарная кровать не оправдана.",
     orderTitle: "Как заказать",
-    step1: "Напишите в WhatsApp или Messenger либо позвоните — подтвердим наличие и доставку.",
-    step2: "Подтверждаем заказ в переписке — без предоплаты.",
+    step1: "Оставьте имя и номер в форме — перезвоним и подтвердим наличие и доставку.",
+    step2: "Подтверждаем заказ в разговоре — без предоплаты.",
     step3: "Платите при получении, курьеру — наличными или переводом. Отправляем в любой город Грузии.",
     trust1: "Оплата при получении",
     trust2: "Возврат в течение 14 дней",
     shortFormTitle: "Оставьте номер — перезвоним и всё расскажем",
     shortFormText: "Два поля, займёт секунду. Подскажем по размеру и доставке.",
     formTitle: "Оставьте номер — свяжемся сами",
-    formText: "Если писать в мессенджер неудобно, оставьте номер и укажите, как вам ответить.",
+    formText: "Оставьте номер и укажите, как вам ответить.",
     fName: "Имя",
     fPhone: "Номер телефона",
     fPrefer: "Как вам ответить?",
@@ -907,11 +939,11 @@ const I18N = {
     fConsent: "Нажимая кнопку, вы соглашаетесь на обработку номера: мы свяжемся с вами, а в Meta он уйдёт в хешированном виде — для оценки рекламы.",
     fSubmit: "Свяжитесь со мной",
     fOk: "Спасибо! Номер получили, свяжемся в течение дня.",
-    fErr: "Отправить не удалось. Напишите нам в мессенджер или позвоните.",
-    contactTitle: "Связаться с нами",
-    contactText: "Отвечаем в течение дня — подскажем по размеру и доставке.",
-    chWa: "WhatsApp", chViber: "Viber", chMsg: "Messenger", chIg: "Instagram", chPhone: "Позвонить",
+    fErr: "Отправить не удалось. Попробуйте ещё раз чуть позже.",
     privacyLink: "Политика конфиденциальности",
+    cookieText: "Чтобы оценивать рекламу, мы используем cookie Meta. Они включаются только после вашего согласия.",
+    cookieYes: "Принять",
+    cookieNo: "Отклонить",
     legalLine: "Продавец: {seller}, идентификационный номер {id}. Адрес: {address}.",
     footer: "{brand} · Тбилиси. Цены указаны в лари."
   },
@@ -924,14 +956,14 @@ const I18N = {
     ctaMsg: "Message on Messenger",
     ctaChat: "Message us",
     ctaLeaveNumber: "Leave your number",
-    fNoEndpoint: "The form is not connected yet. Please message us instead.",
+    fNoEndpoint: "The form is not connected yet. Please try again shortly.",
     ctaViber: "Message on Viber",
     pageTitle: "Folding bed with mattress — Tbilisi",
     langName: "English",
     deliveryFree: "free",
     ctaCall: "Call us",
     priceNote: "Price per unit. Delivery in Tbilisi — {delivery}, elsewhere in Georgia by courier. You pay on delivery.",
-    ctaFit: "Message us — we will tell you if it fits your room →",
+    ctaFit: "Leave your number — we will tell you if it fits your room →",
     ctaBook: "Order one — pay on delivery",
     altHero: "Folding bed with mattress, 190×68×37 cm, holds up to 150 kg",
     altFrame: "Reinforced steel frame, holds up to 150 kg",
@@ -952,7 +984,7 @@ const I18N = {
     b2bTitle: "Hostel, guesthouse or office?",
     b2bPrice: "Wholesale from {min} units — {price} each",
     b2bText: "We bring a sample in Tbilisi free of charge — see it first, decide after. Lead time and price for a batch agreed individually.",
-    b2bCta: "Bring a sample to my hostel",
+    b2bCta: "Leave your number — we will bring a sample",
     videoTitle: "What it looks like in real life",
     videoNote: "Filmed by us, on this exact model.",
     whoTitle: "Who it is for",
@@ -963,15 +995,15 @@ const I18N = {
     who3t: "An extra bed",
     who3p: "For a rented flat, a kids' room or temporary housing — where a permanent bed makes no sense.",
     orderTitle: "How to order",
-    step1: "Message us on WhatsApp or Messenger, or call — we confirm availability and delivery.",
-    step2: "We confirm the order in chat — no prepayment.",
+    step1: "Leave your name and number in the form — we call you back and confirm availability and delivery.",
+    step2: "We confirm the order on the call — no prepayment.",
     step3: "You pay on delivery, to the courier — cash or bank transfer. We ship to any city in Georgia.",
     trust1: "Payment on delivery",
     trust2: "14-day returns",
     shortFormTitle: "Leave your number — we will call back",
     shortFormText: "Two fields, takes a second. We will advise on size and delivery.",
     formTitle: "Leave your number — we will get back to you",
-    formText: "If messaging is not your thing, leave a number and tell us how to reach you.",
+    formText: "Leave a number and tell us how to reach you.",
     fName: "Name",
     fPhone: "Phone number",
     fPrefer: "How should we reply?",
@@ -981,11 +1013,11 @@ const I18N = {
     fConsent: "By pressing the button you agree we may use your number to contact you and pass it to Meta in hashed form to measure our ads.",
     fSubmit: "Have someone contact me",
     fOk: "Thank you! We have your number and will be in touch within the day.",
-    fErr: "Could not send. Please message us or give us a call.",
-    contactTitle: "Get in touch",
-    contactText: "We reply within the day — happy to advise on size and delivery.",
-    chWa: "WhatsApp", chViber: "Viber", chMsg: "Messenger", chIg: "Instagram", chPhone: "Call",
+    fErr: "Could not send. Please try again in a moment.",
     privacyLink: "Privacy policy",
+    cookieText: "We use Meta advertising cookies to measure how our ads perform. They are switched on only after you agree.",
+    cookieYes: "Accept",
+    cookieNo: "Decline",
     legalLine: "Seller: {seller}, identification number {id}. Address: {address}.",
     footer: "{brand} · Tbilisi. Prices in GEL."
   }
@@ -1053,6 +1085,23 @@ const I18N = {
 
   /* event — имя события для пикселя. Contact = клик по каналу связи, Lead = отправленная форма.
      Клик по мессенджеру заявкой не считается: иначе конверсия завышена в разы. */
+  const CONSENT_KEY = "odra.consent.ads";
+
+  /* Высота баннера согласия уходит в CSS-переменную: липкая панель с главной
+     кнопкой «Оставить номер» поднимается ровно на неё и не оказывается под баннером. */
+  function setCookieHeight(px) {
+    document.documentElement.style.setProperty("--cookie-h", Math.ceil(px) + "px");
+  }
+
+  /* Мерим по реальному прямоугольнику и переизмеряем после загрузки шрифта:
+     offsetHeight округляет вниз, а веб-шрифт меняет высоту уже после первого замера —
+     из-за этого баннер наезжал на кнопку «Оставить номер» на четыре пиксела. */
+  function measureCookieBar() {
+    const bar = document.getElementById("cookie-bar");
+    if (!bar || bar.hidden) return;
+    setCookieHeight(bar.getBoundingClientRect().height);
+  }
+
   function track(event, channel) {
     const meta = { content_name: channel, source: SRC, lang: lang, campaign: CAMPAIGN || "none" };
     if (window.fbq) window.fbq("track", event, meta);
@@ -1065,9 +1114,13 @@ const I18N = {
     return order.find(c => CONFIG[c]) || (CONFIG[want] ? want : null);
   }
 
-  /* Куда ведут главные кнопки в режиме formFirst.
-     chat-book стоит выше нижней формы — ведём в неё, а не назад к верхней. */
-  const FORM_ANCHOR = { "chat": "#lead-top", "chat-sticky": "#lead-top", "chat-book": "#lead-form" };
+  /* Куда ведут главные кнопки в режиме formFirst. Все до одной — в форму:
+     предложений написать в мессенджер на странице больше нет.
+     Всё, что стоит ниже верхней формы, ведём в нижнюю, чтобы не гнать читателя назад. */
+  const FORM_ANCHOR = {
+    "chat": "#lead-top", "chat-sticky": "#lead-top",
+    "chat-fit": "#lead-form", "chat-book": "#lead-form", "chat-b2b": "#lead-form"
+  };
 
   /* Плавно доводим до формы, не трогая историю браузера: hash в адрес не пишется,
      «назад» по-прежнему уводит на предыдущую страницу. */
@@ -1107,9 +1160,7 @@ const I18N = {
       const kind = el.dataset.cta;
       const isChat = kind.startsWith("chat");
       const b2b = kind === "chat-b2b";
-      /* Главные кнопки ведут на форму: нужны имя и телефон на сайте, а не переписка.
-         chat-fit («подскажем, влезет ли») и chat-b2b («привезите образец») остаются
-         в мессенджере — это приглашения к разговору, а поля для сообщения в форме нет. */
+      /* Все кнопки ведут на форму: нужны имя и телефон на сайте, а не переписка. */
       const anchor = CONFIG.formFirst ? FORM_ANCHOR[kind] : null;
       const channel = anchor ? "form" : (isChat ? resolveChat() : kind.split("-")[0]);
       const noCallHere = channel === "phone" && lang === "ka";   // по-грузински мы не говорим
@@ -1140,20 +1191,7 @@ const I18N = {
     });
   }
 
-  function buildChannels() {
-    const t = I18N[lang];
-    const box = document.getElementById("channels");
-    box.textContent = "";
-    [["whatsapp", t.chWa, true], ["messenger", t.chMsg, false], ["viber", t.chViber, false],
-     ["instagram", t.chIg, false], ["phone", t.chPhone, false]].forEach(([kind, label, primary]) => {
-      const a = document.createElement("a");
-      a.className = "btn " + (primary ? "btn-primary" : "btn-ghost");
-      a.dataset.cta = kind;
-      a.href = "#";
-      a.textContent = label;
-      box.appendChild(a);
-    });
-  }
+  let renderedOnce = false;
 
   function render() {
     const t = I18N[lang];
@@ -1199,16 +1237,21 @@ const I18N = {
     if (barForm) barForm.hidden = CONFIG.formFirst ? true : !!resolveChat();
     const callOption = document.querySelector('.prefer input[value="call"]');
     if (callOption) callOption.closest("label").hidden = (lang === "ka");
-    const primaryRadio = document.querySelector('.prefer input[value="' + (resolveChat() || "whatsapp") + '"]');
-    if (primaryRadio) primaryRadio.checked = true;
-    buildChannels();
+    /* Значение по умолчанию берётся ровно из одного места — CONFIG.preferDefault,
+       и не зависит ни от языка, ни от resolveChat(). Уже сделанный посетителем
+       выбор не сбрасываем: иначе смена языка молча меняет его ответ. */
+    if (!document.querySelector('.prefer input:checked') || !renderedOnce) {
+      const pref = document.querySelector('.prefer input[value="' + CONFIG.preferDefault + '"]')
+                || document.querySelector('.prefer input[value="whatsapp"]');
+      if (pref && !pref.closest("label").hidden) pref.checked = true;
+    }
+    renderedOnce = true;
     applyLinks();
-    const anyChannel = !!(CONFIG.whatsapp || CONFIG.messenger || CONFIG.viber || CONFIG.phone || CONFIG.instagram);
-    const contact = document.querySelector(".contact");
-    if (contact) contact.hidden = !anyChannel;
     document.querySelectorAll(".inline-cta").forEach(p => {
       p.hidden = ![...p.querySelectorAll("a")].some(a => !a.hidden);
     });
+    /* Баннер согласия виден — переизмеряем его высоту: на другом языке текст другой длины */
+    measureCookieBar();
   }
 
   /* пока кнопка в герое на экране, липкая панель не нужна */
@@ -1230,22 +1273,30 @@ const I18N = {
     form.querySelector('[name="lang"]').value = lang;
     form.querySelector('[name="source"]').value = SRC;
     form.querySelector('[name="campaign"]').value = CAMPAIGN || "none";
-    const body = new URLSearchParams(new FormData(form)).toString();
+    /* Web3Forms: POST на api.web3forms.com/submit, тело — JSON, обязателен access_key.
+       Успех — статус 200 И success:true в ответе; ловушка для ботов — чекбокс botcheck
+       (не отмечен человеком, поэтому в FormData его просто нет). */
+    const fd = new FormData(form);
+    const place = fd.get("place") === "top" ? "top" : "bottom";
     const endpoint = CONFIG.formEndpoint;
-    if (!endpoint) {
+    if (!endpoint || !CONFIG.formKey) {
       formMsg.className = "form-msg err";
       formMsg.textContent = t.fNoEndpoint;
       formMsg.hidden = false;
       return;
     }
+    fd.set("access_key", CONFIG.formKey);
+    fd.set("from_name", CONFIG.brand + " — сайт");
+    fd.set("subject", CONFIG.brand + ": заявка [" + lang + "] форма " + (place === "top" ? "верхняя" : "нижняя"));
     try {
       const r = await fetch(endpoint, {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded", "Accept": "application/json" },
-        body: body
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify(Object.fromEntries(fd))
       });
-      if (!r.ok) throw new Error(r.status);
-      track("Lead", "form-" + (form.querySelector('[name="place"]') ? "top" : "bottom"));
+      const data = await r.json().catch(() => ({}));
+      if (!r.ok || data.success !== true) throw new Error(data.message || r.status);
+      track("Lead", "form-" + place);
       form.textContent = "";
       const ok = document.createElement("p");
       ok.className = "form-msg";
@@ -1305,7 +1356,20 @@ const I18N = {
     box.classList.add("on");
   }
 
-  if (CONFIG.pixelId) {
+  /* ================================================================
+     Согласие на рекламные cookie.
+     Закон Грузии «О защите персональных данных» №3144/2023, статья 12:
+     обработка для прямого маркетинга — только с предварительного согласия.
+     Пиксель Meta это ретаргетинг и оценка рекламы, поэтому до явного «принять»
+     он не грузится вовсе: ни fbevents.js, ни PageView, ни cookie _fbp.
+     Выбор хранится в localStorage, второй раз баннер не показывается.
+     ================================================================ */
+  function consentRead() {
+    try { return localStorage.getItem(CONSENT_KEY); } catch (e) { return null; }
+  }
+
+  function startPixel() {
+    if (!CONFIG.pixelId || window.fbq) return;
     /* стандартный сниппет Meta Pixel */
     !function (f, b, e, v, n, t, s) {
       if (f.fbq) return; n = f.fbq = function () { n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments) };
@@ -1316,10 +1380,37 @@ const I18N = {
     window.fbq("track", "PageView");
   }
 
+  function setupConsent() {
+    const bar = document.getElementById("cookie-bar");
+    const choice = consentRead();
+    if (choice === "yes") startPixel();
+    if (!bar) return;
+    if (choice === "yes" || choice === "no") return;   // выбор уже сделан
+
+    bar.hidden = false;
+    measureCookieBar();
+    window.addEventListener("resize", measureCookieBar);
+    if (window.ResizeObserver) new ResizeObserver(measureCookieBar).observe(bar);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(measureCookieBar);
+
+    function decide(value) {
+      try { localStorage.setItem(CONSENT_KEY, value); } catch (e) {}
+      bar.hidden = true;
+      setCookieHeight(0);
+      if (value === "yes") startPixel();
+    }
+    const yes = document.getElementById("cookie-yes");
+    const no = document.getElementById("cookie-no");
+    if (yes) yes.addEventListener("click", () => decide("yes"));
+    if (no) no.addEventListener("click", () => decide("no"));
+  }
+
   render();
+  setupConsent();
   setupNotice();
 })();
 </script>
+
 
 </body>
 </html>
