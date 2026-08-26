@@ -252,10 +252,9 @@
   .price { font-family: "Oswald", sans-serif; font-size: 32px; font-weight: 600; color: var(--signal); }
   .price-note { font-size: 13.5px; color: var(--muted); }
 
-  .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo img { width: 100%; height: auto; display: block; }
 
   .photo {
-    aspect-ratio: 4 / 3;
     border: 1px solid var(--line);
     border-radius: 3px;
     overflow: hidden;
@@ -302,6 +301,7 @@
     background: var(--surface);
   }
   .gallery img { width: 100%; height: auto; display: block; }
+  .gallery figure.wide { grid-column: span 2; }
   .gallery figcaption { padding: 11px 15px 13px; font-size: 13.5px; color: var(--muted); }
 
   .proof {
@@ -505,6 +505,7 @@
     .specs { grid-template-columns: repeat(2, 1fr); }
     .who { grid-template-columns: 1fr; }
     .gallery { grid-template-columns: 1fr; }
+    .gallery figure.wide { grid-column: auto; }
     .gallery figure { max-width: 420px; margin: 0 auto; }
     .trust { grid-template-columns: 1fr; }
     body { padding-bottom: 120px; }
@@ -568,9 +569,8 @@
     </div>
     <div class="photo-wrap">
       <div class="photo">
-      <img id="img-hero" src="../img/own43.jpg" alt="" width="1040" height="780" fetchpriority="high" data-i18n-alt="altHero">
+      <img id="img-hero" src="../img/card_ru.jpg" alt="" width="520" height="693" fetchpriority="high" data-i18n-alt="altHero">
       </div>
-      <p class="photo-note" data-i18n="ownPhoto">Наше фото, Тбилиси</p>
     </div>
   </div>
 
@@ -613,9 +613,9 @@
   <p class="inline-cta"><a data-cta="chat-fit" href="#" data-i18n="ctaFit">Напишите — подскажем, влезет ли в вашу комнату →</a></p>
 
   <div class="gallery">
-    <figure>
-      <img id="img-card" src="../img/card_ru.jpg" alt="" width="520" height="693" loading="lazy" data-i18n-alt="altHero">
-      <figcaption data-i18n="capCard">Размеры, нагрузка и комплектация одной картинкой</figcaption>
+    <figure class="wide">
+      <img id="img-card" src="../img/own43.jpg" alt="" width="1040" height="780" loading="lazy" data-i18n-alt="altHero">
+      <figcaption data-i18n="ownPhoto">Размеры, нагрузка и комплектация одной картинкой</figcaption>
     </figure>
     <figure>
       <img id="img-mattress" src="../img/mattress_ru.jpg" alt="" width="520" height="693" loading="lazy" data-i18n-alt="altMattress">
@@ -721,7 +721,7 @@
 </div>
 
 <script>
-const IMAGES = {"ka": {"card": "../img/card_ka.jpg", "mattress": "../img/mattress_ka.jpg", "carry": "../img/carry_ka.jpg", "storage": "../img/storage_ka.jpg", "frame": "../img/frame_ka.jpg", "hero": "../img/own43.jpg"}, "ru": {"card": "../img/card_ru.jpg", "mattress": "../img/mattress_ru.jpg", "carry": "../img/carry_ru.jpg", "storage": "../img/storage_ru.jpg", "frame": "../img/frame_ru.jpg", "hero": "../img/own43.jpg"}, "en": {"card": "../img/card_en.jpg", "mattress": "../img/mattress_en.jpg", "carry": "../img/carry_en.jpg", "storage": "../img/storage_en.jpg", "frame": "../img/frame_en.jpg", "hero": "../img/own43.jpg"}};
+const IMAGES = {"ka": {"card": "../img/card_ka.jpg", "mattress": "../img/mattress_ka.jpg", "carry": "../img/carry_ka.jpg", "storage": "../img/storage_ka.jpg", "frame": "../img/frame_ka.jpg", "hero": "../img/card_ka.jpg", "own": "../img/own43.jpg"}, "ru": {"card": "../img/card_ru.jpg", "mattress": "../img/mattress_ru.jpg", "carry": "../img/carry_ru.jpg", "storage": "../img/storage_ru.jpg", "frame": "../img/frame_ru.jpg", "hero": "../img/card_ru.jpg", "own": "../img/own43.jpg"}, "en": {"card": "../img/card_en.jpg", "mattress": "../img/mattress_en.jpg", "carry": "../img/carry_en.jpg", "storage": "../img/storage_en.jpg", "frame": "../img/frame_en.jpg", "hero": "../img/card_en.jpg", "own": "../img/own43.jpg"}};
 
 /* ================================================================
    CONFIG — единственное место, которое нужно править руками.
@@ -1162,7 +1162,7 @@ const I18N = {
     document.querySelectorAll("[data-i18n-alt]").forEach(el => { el.alt = fill(t[el.dataset.i18nAlt] || ""); });
     const set = IMAGES[lang] || IMAGES.ka;
     document.getElementById("img-hero").src = set.hero;
-    document.getElementById("img-card").src = set.card;
+    document.getElementById("img-card").src = set.own;
     document.getElementById("img-mattress").src = set.mattress;
     document.getElementById("img-carry").src = set.carry;
     document.getElementById("img-storage").src = set.storage;
