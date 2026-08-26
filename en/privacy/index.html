@@ -186,8 +186,8 @@
 
   .hero {
     display: grid;
-    grid-template-columns: 1.05fr 0.95fr;
-    gap: 44px;
+    grid-template-columns: 0.92fr 1.08fr;
+    gap: 36px;
     align-items: center;
     padding: 56px 0 40px;
   }
@@ -226,8 +226,10 @@
   .price { font-family: "Oswald", sans-serif; font-size: 32px; font-weight: 600; color: var(--signal); }
   .price-note { font-size: 13.5px; color: var(--muted); }
 
+  .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
   .photo {
-    aspect-ratio: 520 / 693;
+    aspect-ratio: 4 / 3;
     border: 1px solid var(--line);
     border-radius: 3px;
     overflow: hidden;
@@ -381,6 +383,7 @@
   }
   .video-wrap video { width: 100%; height: auto; display: block; }
   .video-note { margin: 10px 0 0; font-size: 14px; color: var(--muted); }
+  .photo-note { margin: 8px 0 0; font-size: 12.5px; color: var(--muted); }
 
   .inline-cta { margin: 0 0 26px; }
   .inline-cta a:not(.btn) {
@@ -475,8 +478,6 @@
     .hero .price-block { order: 4; margin-top: 0; }
     .hero .cta-row { order: 5; }
     .hero .lede { order: 6; margin: 0; font-size: 16px; }
-    /* фото не должно выдавливать цену за сгиб */
-    .hero .photo img { max-height: 330px; object-fit: cover; object-position: 50% 46%; }
     .topbar .wrap { padding-top: 9px; padding-bottom: 9px; }
     .lang { padding: 4px 7px; font-size: 12px; }
     .brand-sub { display: none; }

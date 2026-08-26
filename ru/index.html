@@ -212,8 +212,8 @@
 
   .hero {
     display: grid;
-    grid-template-columns: 1.05fr 0.95fr;
-    gap: 44px;
+    grid-template-columns: 0.92fr 1.08fr;
+    gap: 36px;
     align-items: center;
     padding: 56px 0 40px;
   }
@@ -252,8 +252,10 @@
   .price { font-family: "Oswald", sans-serif; font-size: 32px; font-weight: 600; color: var(--signal); }
   .price-note { font-size: 13.5px; color: var(--muted); }
 
+  .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
   .photo {
-    aspect-ratio: 520 / 693;
+    aspect-ratio: 4 / 3;
     border: 1px solid var(--line);
     border-radius: 3px;
     overflow: hidden;
@@ -407,6 +409,7 @@
   }
   .video-wrap video { width: 100%; height: auto; display: block; }
   .video-note { margin: 10px 0 0; font-size: 14px; color: var(--muted); }
+  .photo-note { margin: 8px 0 0; font-size: 12.5px; color: var(--muted); }
 
   .inline-cta { margin: 0 0 26px; }
   .inline-cta a:not(.btn) {
@@ -501,8 +504,6 @@
     .hero .price-block { order: 4; margin-top: 0; }
     .hero .cta-row { order: 5; }
     .hero .lede { order: 6; margin: 0; font-size: 16px; }
-    /* фото не должно выдавливать цену за сгиб */
-    .hero .photo img { max-height: 330px; object-fit: cover; object-position: 50% 46%; }
     .topbar .wrap { padding-top: 9px; padding-bottom: 9px; }
     .lang { padding: 4px 7px; font-size: 12px; }
     .brand-sub { display: none; }
@@ -570,8 +571,11 @@
         <span class="price-note" data-i18n="priceNote">Цена за штуку. Доставка по Тбилиси — 15 ₾. Оплата при получении.</span>
       </div>
     </div>
-    <div class="photo">
-      <img id="img-hero" src="../img/hero_ru.jpg" alt="" width="520" height="693" fetchpriority="high" data-i18n-alt="altHero">
+    <div class="photo-wrap">
+      <div class="photo">
+      <img id="img-hero" src="../img/own43.jpg" alt="" width="1040" height="780" fetchpriority="high" data-i18n-alt="altHero">
+      </div>
+      <p class="photo-note" data-i18n="ownPhoto">Наше фото, Тбилиси</p>
     </div>
   </div>
 
@@ -603,9 +607,25 @@
     <div class="spec"><p class="spec-v" data-i18n="spec4v">+ чехол</p><p class="spec-l" data-i18n="spec4l">для переноски и хранения, в комплекте</p></div>
   </div>
 
+  <section id="video-section" hidden>
+    <h2 data-i18n="videoTitle">Как это выглядит вживую</h2>
+    <div class="video-wrap">
+      <video id="product-video" controls playsinline preload="metadata"></video>
+    </div>
+    <p class="video-note" data-i18n="videoNote">Видео снято нами, на этой же модели.</p>
+  </section>
+
   <p class="inline-cta"><a data-cta="chat-fit" href="#" data-i18n="ctaFit">Напишите — подскажем, влезет ли в вашу комнату →</a></p>
 
   <div class="gallery">
+    <figure>
+      <img id="img-card" src="../img/card_ru.jpg" alt="" width="520" height="693" loading="lazy" data-i18n-alt="altHero">
+      <figcaption data-i18n="capCard">Размеры, нагрузка и комплектация одной картинкой</figcaption>
+    </figure>
+    <figure>
+      <img id="img-mattress" src="../img/mattress_ru.jpg" alt="" width="520" height="693" loading="lazy" data-i18n-alt="altMattress">
+      <figcaption data-i18n="capMattress">Матрас 6 см, наполнитель — синтепон</figcaption>
+    </figure>
     <figure>
       <img id="img-carry" src="../img/carry_ru.jpg" alt="" width="520" height="693" loading="lazy" data-i18n-alt="altCarry">
       <figcaption data-i18n="cap1">Складывается в чехол и уносится на плече</figcaption>
@@ -634,14 +654,6 @@
       <p data-i18n="b2bText">Привезём образец в Тбилиси бесплатно — посмотрите вживую и решите. Сроки и цену на партию согласуем отдельно.</p>
       <a class="btn btn-primary" data-cta="chat-b2b" href="#" data-i18n="b2bCta">Привезите образец в мой хостел</a>
     </div>
-  </section>
-
-  <section id="video-section" hidden>
-    <h2 data-i18n="videoTitle">Как это выглядит вживую</h2>
-    <div class="video-wrap">
-      <video id="product-video" controls playsinline preload="metadata"></video>
-    </div>
-    <p class="video-note" data-i18n="videoNote">Видео снято нами, на этой же модели.</p>
   </section>
 
   <section>
@@ -716,7 +728,7 @@
 </div>
 
 <script>
-const IMAGES = {"ka": {"hero": "../img/hero_ka.jpg", "carry": "../img/carry_ka.jpg", "storage": "../img/storage_ka.jpg", "frame": "../img/frame_ka.jpg"}, "ru": {"hero": "../img/hero_ru.jpg", "carry": "../img/carry_ru.jpg", "storage": "../img/storage_ru.jpg", "frame": "../img/frame_ru.jpg"}, "en": {"hero": "../img/hero_en.jpg", "carry": "../img/carry_en.jpg", "storage": "../img/storage_en.jpg", "frame": "../img/frame_en.jpg"}};
+const IMAGES = {"ka": {"card": "../img/card_ka.jpg", "mattress": "../img/mattress_ka.jpg", "carry": "../img/carry_ka.jpg", "storage": "../img/storage_ka.jpg", "frame": "../img/frame_ka.jpg", "hero": "../img/own43.jpg"}, "ru": {"card": "../img/card_ru.jpg", "mattress": "../img/mattress_ru.jpg", "carry": "../img/carry_ru.jpg", "storage": "../img/storage_ru.jpg", "frame": "../img/frame_ru.jpg", "hero": "../img/own43.jpg"}, "en": {"card": "../img/card_en.jpg", "mattress": "../img/mattress_en.jpg", "carry": "../img/carry_en.jpg", "storage": "../img/storage_en.jpg", "frame": "../img/frame_en.jpg", "hero": "../img/own43.jpg"}};
 
 /* ================================================================
    CONFIG — единственное место, которое нужно править руками.
@@ -788,6 +800,10 @@ const I18N = {
     spec2v: "190×68",  spec2l: "სასაწოლე ადგილი, სმ",
     spec3v: "21×17×101", spec3l: "დაკეცილი, სმ — ეტევა კარადაში",
     spec4v: "+ ჩანთა", spec4l: "გადასატანად და შესანახად, კომპლექტში",
+    ownPhoto: "ჩვენი ფოტო, თბილისი",
+    capCard: "ზომები, დატვირთვა და კომპლექტაცია ერთ სურათზე",
+    capMattress: "მატრასი 6 სმ, შიგთავსი — სინთეპონი",
+    altMattress: "მატრასის სისქე 6 სმ, სინთეპონის შიგთავსი",
     cap1: "იკეცება ჩანთაში და მხარზე გადაიკიდება",
     cap2: "დაკეცილი ეტევა კარადაშიც და საბარგულშიც",
     cap3: "გამაგრებული კარკასი — უძლებს 150 კგ-მდე",
@@ -860,6 +876,10 @@ const I18N = {
     spec2v: "190×68",   spec2l: "спальное место, см",
     spec3v: "21×17×101", spec3l: "в сложенном виде, см — помещается в шкаф",
     spec4v: "+ чехол",  spec4l: "для переноски и хранения, в комплекте",
+    ownPhoto: "Наше фото, Тбилиси",
+    capCard: "Размеры, нагрузка и комплектация одной картинкой",
+    capMattress: "Матрас 6 см, наполнитель — синтепон",
+    altMattress: "Матрас толщиной 6 см с синтепоновым наполнителем",
     cap1: "Складывается в чехол и уносится на плече",
     cap2: "В сложенном виде помещается и в шкаф, и в багажник",
     cap3: "Усиленный каркас — выдерживает до 150 кг",
@@ -932,6 +952,10 @@ const I18N = {
     spec2v: "190×68",  spec2l: "sleeping area, cm",
     spec3v: "21×17×101", spec3l: "folded, cm — fits a wardrobe",
     spec4v: "+ cover", spec4l: "for carrying and storage, included",
+    ownPhoto: "Our own photo, Tbilisi",
+    capCard: "Dimensions, load and what is in the box — in one picture",
+    capMattress: "6 cm mattress with polyester fibre filling",
+    altMattress: "A 6 cm mattress with polyester fibre filling",
     cap1: "Folds into its cover and goes on your shoulder",
     cap2: "Folded, it fits a wardrobe or a car boot",
     cap3: "Reinforced frame — holds up to 150 kg",
@@ -1116,6 +1140,8 @@ const I18N = {
     document.querySelectorAll("[data-i18n-alt]").forEach(el => { el.alt = fill(t[el.dataset.i18nAlt] || ""); });
     const set = IMAGES[lang] || IMAGES.ka;
     document.getElementById("img-hero").src = set.hero;
+    document.getElementById("img-card").src = set.card;
+    document.getElementById("img-mattress").src = set.mattress;
     document.getElementById("img-carry").src = set.carry;
     document.getElementById("img-storage").src = set.storage;
     document.getElementById("img-frame").src = set.frame;
