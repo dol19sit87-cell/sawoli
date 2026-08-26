@@ -1075,7 +1075,16 @@ const I18N = {
     const target = document.querySelector(sel);
     if (!target) return;               // формы нет — пусть браузер отработает якорь сам
     ev.preventDefault();
-    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    const bar = document.querySelector(".topbar");
+    const off = (bar ? bar.getBoundingClientRect().height : 0) + 10;   // липкая шапка не должна накрыть заголовок
+    const y = Math.max(0, target.getBoundingClientRect().top + window.pageYOffset - off);
+    const from = window.pageYOffset;
+    try { window.scrollTo({ top: y, behavior: "smooth" }); } catch (e) { window.scrollTo(0, y); }
+    /* Там, где плавная прокрутка не поддерживается или отключена, страница не сдвинется вовсе,
+       и главная кнопка сайта окажется мёртвой. Проверяем и доводим рывком. */
+    setTimeout(function () {
+      if (Math.abs(window.pageYOffset - from) < 2) window.scrollTo(0, y);
+    }, 150);
   }
 
   function hrefFor(channel, b2b, anchor) {
