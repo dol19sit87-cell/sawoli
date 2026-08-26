@@ -579,8 +579,8 @@
     </div>
   </div>
 
-  <form class="lead-form lead-form--short" id="lead-top" name="lead-top" method="POST" data-netlify="true">
-    <input type="hidden" name="form-name" value="lead-top">
+  <form class="lead-form lead-form--short" id="lead-top" name="lead-top" method="POST">
+    <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
     <input type="hidden" name="lang" value="">
     <input type="hidden" name="source" value="">
     <input type="hidden" name="campaign" value="">
@@ -680,8 +680,8 @@
   </section>
 
   <section>
-    <form class="lead-form" name="lead" method="POST" data-netlify="true" id="lead-form">
-      <input type="hidden" name="form-name" value="lead">
+    <form class="lead-form" name="lead" method="POST" id="lead-form">
+      <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px">
       <input type="hidden" name="lang" id="f-lang" value="">
       <input type="hidden" name="source" id="f-source" value="">
       <input type="hidden" name="campaign" id="f-campaign" value="">
@@ -741,9 +741,10 @@ const CONFIG = {
   phone:      "",              // например "+995 555 12 34 56" — как показывать на экране
   messenger:  "61593928525080",  // страница ODRA JET; когда появится юзернейм — заменить на него
   instagram:  "",              // имя профиля без @
-  pixelId:    "",              // ID пикселя Meta, только цифры
+  pixelId:    "1047116104717565",  // ID пикселя Meta, только цифры
 
-  formEndpoint: "",            // пусто = отправка на свой же адрес (так работают Netlify Forms)
+  formEndpoint: "",            // URL Formspree вида https://formspree.io/f/xxxxxxxx. Пусто = форма не отправляется.
+  formFirst: true,             // true = главные кнопки ведут на форму, а не в мессенджер
   // Реквизиты продавца — идут в подвал и в политику конфиденциальности
   legal: {
     seller:    "Individual Entrepreneur Rodion Sitko",
@@ -751,7 +752,7 @@ const CONFIG = {
     regDate:   "07.08.2026",
     authority: "LEPL National Agency of Public Registry",
     address:   "Georgia, Tbilisi, Mtatsminda District, 19 Erekle Tatishvili Street, Entrance 2",
-    email:     ""            // почта для связи и отзыва согласия — обязательна к заполнению
+    email:     "cmstorequest67@gmail.com"   // почта для связи и отзыва согласия
   },
 
   videoUrl: "video/odra.mp4",  // пусто = блок скрыт
@@ -1218,7 +1219,7 @@ const I18N = {
     try {
       const r = await fetch(endpoint, {
         method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        headers: { "Content-Type": "application/x-www-form-urlencoded", "Accept": "application/json" },
         body: body
       });
       if (!r.ok) throw new Error(r.status);
