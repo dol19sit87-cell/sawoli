@@ -292,39 +292,29 @@
   section { padding: 44px 0 0; }
   section h2 { font-size: 23px; font-weight: 700; margin-bottom: 20px; }
 
-  .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-  .gallery figure {
-    margin: 0;
+  /* ---------- чередующиеся блоки: картинка и текст рядом ---------- */
+
+  .zz {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: center;
+  }
+  /* min-width:0 обязателен: иначе картинка распирает колонку грида и страница
+     уезжает вбок на узких экранах */
+  .zz > * { min-width: 0; }
+  /* сторона чередуется: у блока с этим классом картинка уходит вправо */
+  .zz--flip > :first-child { order: 2; }
+  .zz-media {
     border: 1px solid var(--line);
     border-radius: 3px;
     overflow: hidden;
     background: var(--surface);
   }
-  .gallery img { width: 100%; height: auto; display: block; }
-  .gallery figure.wide { grid-column: span 2; }
-  .gallery figcaption { padding: 11px 15px 13px; font-size: 13.5px; color: var(--muted); }
-
-  .proof {
-    display: flex;
-    gap: 18px;
-    align-items: center;
-    background: var(--surface-2);
-    border-radius: 3px;
-    padding: 18px 22px;
-    margin-top: 22px;
-    flex-wrap: wrap;
-  }
-  .proof p { margin: 0; font-size: 15px; max-width: 56ch; }
-
-  .who { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-  .card {
-    border: 1px solid var(--line);
-    border-radius: 3px;
-    background: var(--surface);
-    padding: 18px 20px 20px;
-  }
-  .card h3 { font-size: 16px; font-weight: 700; margin-bottom: 7px; }
-  .card p { margin: 0; font-size: 14.5px; color: var(--muted); }
+  .zz-media img { width: 100%; height: auto; display: block; }
+  .zz-text h2 { margin-bottom: 12px; }
+  .zz-text p { margin: 0; font-size: 15.5px; color: var(--muted); }
+  .zz-text p + p { margin-top: 10px; }
 
   /* ---------- b2b ---------- */
 
@@ -400,7 +390,12 @@
     border-radius: 3px;
     overflow: hidden;
     background: #000;
-    max-width: 560px;
+    /* Файл вертикальный, 540x960. На десктопе показываем ~300 css-px: на экране
+       с двойной плотностью это ~600 физических пикселей против 540 исходных,
+       то есть почти один в один. Растянутый до 560 css-px он давал вдвое
+       больше физических пикселей, чем есть в файле, — отсюда и было мыло. */
+    max-width: 300px;
+    margin: 0 auto;
   }
   .video-wrap video { width: 100%; height: auto; display: block; }
   .video-note { margin: 10px 0 0; font-size: 14px; color: var(--muted); }
@@ -521,10 +516,11 @@
     .lang { padding: 4px 7px; font-size: 12px; }
     .brand-sub { display: none; }
     .specs { grid-template-columns: repeat(2, 1fr); }
-    .who { grid-template-columns: 1fr; }
-    .gallery { grid-template-columns: 1fr; }
-    .gallery figure.wide { grid-column: auto; }
-    .gallery figure { max-width: 420px; margin: 0 auto; }
+    /* одна колонка: картинка над текстом, порядок блоков сохраняется */
+    .zz { grid-template-columns: 1fr; gap: 16px; }
+    /* на телефоне экран и так уже исходной ширины — не сужаем */
+    .video-wrap { max-width: 100%; }
+    .zz--flip > :first-child { order: 0; }
     .trust { grid-template-columns: 1fr; }
     body { padding-bottom: calc(120px + var(--cookie-h, 0px)); }
     .mobile-bar {
@@ -622,62 +618,58 @@
     <div class="spec"><p class="spec-v" data-i18n="spec4v">+ ჩანთა</p><p class="spec-l" data-i18n="spec4l">გადასატანად და შესანახად, კომპლექტში</p></div>
   </div>
 
-  <section id="video-section" hidden>
-    <h2 data-i18n="videoTitle">როგორ გამოიყურება სინამდვილეში</h2>
+  <section class="zz" id="video-section" hidden>
     <div class="video-wrap">
       <video id="product-video" controls playsinline preload="metadata"></video>
     </div>
-    <p class="video-note" data-i18n="videoNote">ვიდეო გადაღებულია ჩვენ მიერ, იმავე მოდელზე.</p>
-  </section>
-
-  <p class="inline-cta"><a data-cta="chat-fit" href="#" data-i18n="ctaFit">დატოვეთ ნომერი — გეტყვით, ჩაეტევა თუ არა თქვენს ოთახში →</a></p>
-
-  <div class="gallery">
-    <figure class="wide">
-      <img id="img-card" src="img/own43.jpg" alt="" width="1040" height="780" loading="lazy" data-i18n-alt="altOwn">
-      <figcaption data-i18n="ownPhoto">ჩვენი ფოტო, თბილისი</figcaption>
-    </figure>
-    <figure>
-      <img id="img-mattress" src="img/mattress_ka.jpg" alt="" width="520" height="693" loading="lazy" data-i18n-alt="altMattress">
-      <figcaption data-i18n="capMattress">მატრასი 6 სმ, შიგთავსი — სინთეპონი</figcaption>
-    </figure>
-    <figure>
-      <img id="img-carry" src="img/carry_ka.jpg" alt="" width="520" height="693" loading="lazy" data-i18n-alt="altCarry">
-      <figcaption data-i18n="cap1">იკეცება ჩანთაში და მხარზე გადაიკიდება</figcaption>
-    </figure>
-    <figure>
-      <img id="img-storage" src="img/storage_ka.jpg" alt="" width="520" height="693" loading="lazy" data-i18n-alt="altStorage">
-      <figcaption data-i18n="cap2">დაკეცილი ეტევა კარადაშიც და საბარგულშიც</figcaption>
-    </figure>
-    <figure>
-      <img id="img-frame" src="img/frame_ka.jpg" alt="" width="520" height="693" loading="lazy" data-i18n-alt="altFrame">
-      <figcaption data-i18n="cap3">გამაგრებული კარკასი — უძლებს 150 კგ-მდე</figcaption>
-    </figure>
-  </div>
-
-  <p class="inline-cta"><a data-cta="chat-book" class="btn btn-primary" href="#" data-i18n="ctaBook">შეუკვეთეთ — გადახდა მიღებისას</a></p>
-
-  <div class="proof">
-    <p data-i18n="proof">ჩვენ ამ მოდელს თბილისში ჩამოგიტანთ — ლოდინისა და საზღვარგარეთიდან მიწოდების გარეშე: ნახავთ და გადაიხდით კურიერთან.</p>
-  </div>
-
-  <section>
-    <div class="b2b">
-      <h2 data-i18n="b2bTitle">ჰოსტელი, საოჯახო სასტუმრო ან ოფისი?</h2>
-      <p class="b2b-price" id="b2b-price">საბითუმო ფასი 5 ცალიდან — 229 ₾ ცალზე</p>
-      <p data-i18n="b2bText">ნიმუშს უფასოდ მოგიტანთ თბილისში, რომ ადგილზე ნახოთ და მერე გადაწყვიტოთ. პარტიაზე ვადას და ფასს ინდივიდუალურად შევათანხმებთ.</p>
-      <a class="btn btn-primary" data-cta="chat-b2b" href="#" data-i18n="b2bCta">დატოვეთ ნომერი — ნიმუშს მოგიტანთ</a>
+    <div class="zz-text">
+      <h2 data-i18n="videoTitle">როგორ გამოიყურება სინამდვილეში</h2>
+      <p data-i18n="videoLede">წამებში იშლება და აწყობა არ სჭირდება: ჩანთიდან ამოიღეთ, ცენტრში დააჭირეთ — მზადაა.</p>
+      <p class="video-note" data-i18n="videoNote">ვიდეო გადაღებულია ჩვენ მიერ, იმავე მოდელზე.</p>
     </div>
   </section>
 
-  <section>
-    <h2 data-i18n="whoTitle">ვის გამოადგება</h2>
-    <div class="who">
-      <div class="card"><h3 data-i18n="who1t">სტუმრები სახლში</h3><p data-i18n="who1p">ჩანთაში კომპაქტურად ინახება, გაშლას ერთი წუთი სჭირდება — აღარ დაგჭირდებათ დივანის გათავისუფლება ან გასაბერი ლეიბი.</p></div>
-      <div class="card"><h3 data-i18n="who2t">ლაშქრობა და აგარაკი</h3><p data-i18n="who2p">მსუბუქი მეტალის კარკასი ხშირ აწყობა-დაშლას უძლებს და საბარგულში ეტევა.</p></div>
-      <div class="card"><h3 data-i18n="who3t">დამატებითი საძინებელი ადგილი</h3><p data-i18n="who3p">ქირით ბინაში, საბავშვო ოთახში ან დროებით საცხოვრებელში — სადაც მუდმივი საწოლისთვის ადგილი არ არის.</p></div>
+  <section class="zz zz--flip">
+    <div class="zz-media">
+      <img id="img-b1" src="img/b1_ka.jpg" alt="" width="520" height="497" loading="lazy" data-i18n-alt="altUse">
+    </div>
+    <div class="zz-text">
+      <h2 data-i18n="b1Title">გარეთაც და სახლშიც</h2>
+      <p data-i18n="b1Text">ლაშქრობა, აგარაკი, ქირით ბინა, საბავშვო ოთახი ან დროებითი საცხოვრებელი — სადაც მუდმივი საწოლისთვის ადგილი არ არის. მსუბუქი მეტალის კარკასი ხშირ აწყობა-დაშლას უძლებს, საბარგულში ეტევა, დაკეცილი კი კარადაში ინახება.</p>
     </div>
   </section>
+
+  <section class="zz">
+    <div class="zz-media">
+      <img id="img-b2" src="img/b2_ka.jpg" alt="" width="424" height="294" loading="lazy" data-i18n-alt="altMattress">
+    </div>
+    <div class="zz-text">
+      <h2 data-i18n="b2Title">სტუმრები მოვიდნენ, დასაძინებელი ადგილი კი არ არის</h2>
+      <p data-i18n="b2Text">ჩანთაში კომპაქტურად ინახება, გაშლას ერთი წუთი სჭირდება — აღარ დაგჭირდებათ დივანის გათავისუფლება ან გასაბერი ლეიბი. მატრასი 6 სმ, სინთეპონის შიგთავსით — ერთ ღამეზე მეტსაც გამოდგება.</p>
+    </div>
+  </section>
+
+  <section class="zz zz--flip">
+    <div class="zz-media">
+      <img id="img-b3" src="img/b3_ka.jpg" alt="" width="520" height="543" loading="lazy" data-i18n-alt="altFrame">
+    </div>
+    <div class="zz-text">
+      <h2 data-i18n="b3Title">გამაგრებული კონსტრუქცია და სრულფასოვანი საძინებელი ადგილი</h2>
+      <p data-i18n="b3Text">გამაგრებული მეტალის კარკასი 150 კგ-მდე უძლებს და წონის ქვეშ არ იღუნება. სასაწოლე ადგილი 190×68 სმ, სიმაღლე 37 სმ — ზრდასრული ადამიანისთვის საკმარისი.</p>
+    </div>
+  </section>
+
+  <section class="zz">
+    <div class="zz-media">
+      <img id="img-b4" src="img/b4.jpg" alt="" width="790" height="1020" loading="lazy" data-i18n-alt="altCarry">
+    </div>
+    <div class="zz-text">
+      <h2 data-i18n="b4Title">უკვე თბილისშია — გადაიხდით კურიერთან</h2>
+      <p data-i18n="proof">ჩვენ ამ მოდელს თბილისში ჩამოგიტანთ — ლოდინისა და საზღვარგარეთიდან მიწოდების გარეშე: ნახავთ და გადაიხდით კურიერთან.</p>
+    </div>
+  </section>
+
+  <p class="inline-cta"><a data-cta="chat-book" class="btn btn-primary" href="#" data-i18n="ctaOrder">შეუკვეთეთ</a></p>
 
   <section>
     <h2 data-i18n="orderTitle">როგორ შევუკვეთოთ</h2>
@@ -721,6 +713,15 @@
     </form>
   </section>
 
+  <section>
+    <div class="b2b">
+      <h2 data-i18n="b2bTitle">ჰოსტელი, საოჯახო სასტუმრო ან ოფისი?</h2>
+      <p class="b2b-price" id="b2b-price">საბითუმო ფასი 5 ცალიდან — 229 ₾ ცალზე</p>
+      <p data-i18n="b2bText">ნიმუშს უფასოდ მოგიტანთ თბილისში, რომ ადგილზე ნახოთ და მერე გადაწყვიტოთ. პარტიაზე ვადას და ფასს ინდივიდუალურად შევათანხმებთ.</p>
+      <a class="btn btn-primary" data-cta="chat-b2b" href="#" data-i18n="b2bCta">დატოვეთ ნომერი — ნიმუშს მოგიტანთ</a>
+    </div>
+  </section>
+
   <footer>
     <p id="footer-text">ODRA JET · თბილისი. ფასები ლარშია.</p>
     <p class="legal-line" id="legal-line">გამყიდველი: Individual Entrepreneur Rodion Sitko, საიდენტიფიკაციო ნომერი 304824581. მისამართი: Georgia, Tbilisi, Mtatsminda District, 19 Erekle Tatishvili Street, Entrance 2.</p>
@@ -746,7 +747,7 @@
 </div>
 
 <script>
-const IMAGES = {"ka": {"card": "img/card_ka.jpg", "mattress": "img/mattress_ka.jpg", "carry": "img/carry_ka.jpg", "storage": "img/storage_ka.jpg", "frame": "img/frame_ka.jpg", "hero": "img/card_ka.jpg", "own": "img/own43.jpg"}, "ru": {"card": "img/card_ru.jpg", "mattress": "img/mattress_ru.jpg", "carry": "img/carry_ru.jpg", "storage": "img/storage_ru.jpg", "frame": "img/frame_ru.jpg", "hero": "img/card_ru.jpg", "own": "img/own43.jpg"}, "en": {"card": "img/card_en.jpg", "mattress": "img/mattress_en.jpg", "carry": "img/carry_en.jpg", "storage": "img/storage_en.jpg", "frame": "img/frame_en.jpg", "hero": "img/card_en.jpg", "own": "img/own43.jpg"}};
+const IMAGES = {"ka": {"hero": "img/card_ka.jpg", "b1": "img/b1_ka.jpg", "b2": "img/b2_ka.jpg", "b3": "img/b3_ka.jpg"}, "ru": {"hero": "img/card_ru.jpg", "b1": "img/b1_ru.jpg", "b2": "img/b2_ru.jpg", "b3": "img/b3_ru.jpg"}, "en": {"hero": "img/card_en.jpg", "b1": "img/b1_en.jpg", "b2": "img/b2_en.jpg", "b3": "img/b3_en.jpg"}};
 
 /* ================================================================
    CONFIG — единственное место, которое нужно править руками.
@@ -813,24 +814,23 @@ const I18N = {
     deliveryFree: "უფასოდ",
     ctaCall: "დარეკვა",
     priceNote: "ერთი ცალის ფასი. მიწოდება თბილისში — {delivery}, საქართველოს სხვა ქალაქებში — კურიერით. გადახდა მიღებისას.",
-    ctaFit: "დატოვეთ ნომერი — გეტყვით, ჩაეტევა თუ არა თქვენს ოთახში →",
-    ctaBook: "შეუკვეთეთ — გადახდა მიღებისას",
+    ctaOrder: "შეუკვეთეთ",
     altHero: "დასაკეცი საწოლი მატრასით, 190×68×37 სმ, დატვირთვა 150 კგ-მდე",
-    altOwn: "გაშლილი დასაკეცი საწოლი ბინაში, თბილისი",
+    altUse: "გაშლილი დასაკეცი საწოლი და იგივე დაკეცილი, ჩანთაში, ფანჯარასთან",
     altFrame: "გამაგრებული მეტალის კარკასი, უძლებს 150 კგ-მდე",
     altCarry: "ქალს დაკეცილი საწოლი ჩანთით მხარზე გადაკიდებული",
-    altStorage: "დაკეცილი საწოლი ჩანთაში, ზომები 21×17×101 სმ",
     spec1v: "150 კგ",  spec1l: "მაქსიმალური დატვირთვა",
     spec2v: "190×68",  spec2l: "სასაწოლე ადგილი, სმ",
     spec3v: "21×17×101", spec3l: "დაკეცილი, სმ — ეტევა კარადაში",
     spec4v: "+ ჩანთა", spec4l: "გადასატანად და შესანახად, კომპლექტში",
-    ownPhoto: "ჩვენი ფოტო, თბილისი",
-    capCard: "ზომები, დატვირთვა და კომპლექტაცია ერთ სურათზე",
-    capMattress: "მატრასი 6 სმ, შიგთავსი — სინთეპონი",
     altMattress: "მატრასის სისქე 6 სმ, სინთეპონის შიგთავსი",
-    cap1: "იკეცება ჩანთაში და მხარზე გადაიკიდება",
-    cap2: "დაკეცილი ეტევა კარადაშიც და საბარგულშიც",
-    cap3: "გამაგრებული კარკასი — უძლებს 150 კგ-მდე",
+    b1Title: "გარეთაც და სახლშიც",
+    b1Text: "ლაშქრობა, აგარაკი, ქირით ბინა, საბავშვო ოთახი ან დროებითი საცხოვრებელი — სადაც მუდმივი საწოლისთვის ადგილი არ არის. მსუბუქი მეტალის კარკასი ხშირ აწყობა-დაშლას უძლებს, საბარგულში ეტევა, დაკეცილი კი კარადაში ინახება.",
+    b2Title: "სტუმრები მოვიდნენ, დასაძინებელი ადგილი კი არ არის",
+    b2Text: "ჩანთაში კომპაქტურად ინახება, გაშლას ერთი წუთი სჭირდება — აღარ დაგჭირდებათ დივანის გათავისუფლება ან გასაბერი ლეიბი. მატრასი 6 სმ, სინთეპონის შიგთავსით — ერთ ღამეზე მეტსაც გამოდგება.",
+    b3Title: "გამაგრებული კონსტრუქცია და სრულფასოვანი საძინებელი ადგილი",
+    b3Text: "გამაგრებული მეტალის კარკასი 150 კგ-მდე უძლებს და წონის ქვეშ არ იღუნება. სასაწოლე ადგილი 190×68 სმ, სიმაღლე 37 სმ — ზრდასრული ადამიანისთვის საკმარისი.",
+    b4Title: "უკვე თბილისშია — გადაიხდით კურიერთან",
     proof: "ჩვენ ამ მოდელს თბილისში ჩამოგიტანთ — ლოდინისა და საზღვარგარეთიდან მიწოდების გარეშე: ნახავთ და გადაიხდით კურიერთან.",
     b2bTitle: "ჰოსტელი, საოჯახო სასტუმრო ან ოფისი?",
     b2bPrice: "საბითუმო ფასი {min} ცალიდან — {price} ცალზე",
@@ -838,13 +838,7 @@ const I18N = {
     b2bCta: "დატოვეთ ნომერი — ნიმუშს მოგიტანთ",
     videoTitle: "როგორ გამოიყურება სინამდვილეში",
     videoNote: "ვიდეო გადაღებულია ჩვენ მიერ, იმავე მოდელზე.",
-    whoTitle: "ვის გამოადგება",
-    who1t: "სტუმრები სახლში",
-    who1p: "ჩანთაში კომპაქტურად ინახება, გაშლას ერთი წუთი სჭირდება — აღარ დაგჭირდებათ დივანის გათავისუფლება ან გასაბერი ლეიბი.",
-    who2t: "ლაშქრობა და აგარაკი",
-    who2p: "მსუბუქი მეტალის კარკასი ხშირ აწყობა-დაშლას უძლებს და საბარგულში ეტევა.",
-    who3t: "დამატებითი საძინებელი ადგილი",
-    who3p: "ქირით ბინაში, საბავშვო ოთახში ან დროებით საცხოვრებელში — სადაც მუდმივი საწოლისთვის ადგილი არ არის.",
+    videoLede: "წამებში იშლება და აწყობა არ სჭირდება: ჩანთიდან ამოიღეთ, ცენტრში დააჭირეთ — მზადაა.",
     orderTitle: "როგორ შევუკვეთოთ",
     step1: "დატოვეთ სახელი და ნომერი ფორმაში — დაგირეკავთ და დაგიდასტურებთ ხელმისაწვდომობასა და მიწოდებას.",
     step2: "შეკვეთას ვადასტურებთ სატელეფონო საუბარში — წინასწარი გადახდის გარეშე.",
@@ -888,24 +882,23 @@ const I18N = {
     deliveryFree: "бесплатно",
     ctaCall: "Позвонить",
     priceNote: "Цена за штуку. Доставка по Тбилиси — {delivery}, по остальной Грузии — курьерской службой. Оплата при получении.",
-    ctaFit: "Оставьте номер — подскажем, влезет ли в вашу комнату →",
-    ctaBook: "Заказать — оплата при получении",
+    ctaOrder: "Заказать",
     altHero: "Раскладушка с матрасом, 190×68×37 см, нагрузка до 150 кг",
-    altOwn: "Разложенная раскладушка с матрасом в квартире, Тбилиси",
+    altUse: "Разложенная раскладушка и она же в сложенном виде, в чехле у окна",
     altFrame: "Усиленный металлический каркас, выдерживает до 150 кг",
     altCarry: "Женщина несёт сложенную раскладушку в чехле на плече",
-    altStorage: "Раскладушка в сложенном виде, 21×17×101 см",
     spec1v: "150 кг",   spec1l: "максимальная нагрузка",
     spec2v: "190×68",   spec2l: "спальное место, см",
     spec3v: "21×17×101", spec3l: "в сложенном виде, см — помещается в шкаф",
     spec4v: "+ чехол",  spec4l: "для переноски и хранения, в комплекте",
-    ownPhoto: "Наше фото, Тбилиси",
-    capCard: "Размеры, нагрузка и комплектация одной картинкой",
-    capMattress: "Матрас 6 см, наполнитель — синтепон",
     altMattress: "Матрас толщиной 6 см с синтепоновым наполнителем",
-    cap1: "Складывается в чехол и уносится на плече",
-    cap2: "В сложенном виде помещается и в шкаф, и в багажник",
-    cap3: "Усиленный каркас — выдерживает до 150 кг",
+    b1Title: "На улице и в помещении",
+    b1Text: "Кемпинг, дача, съёмная квартира, детская или временное жильё — там, где стационарная кровать не оправдана. Лёгкий металлический каркас не боится частой сборки-разборки, помещается в багажник, а в сложенном виде убирается в шкаф.",
+    b2Title: "Приехали гости, а спать негде",
+    b2Text: "Компактно хранится в чехле, разворачивается за минуту — не нужно освобождать диван или искать надувной матрас. Матрас 6 см с синтепоновым наполнителем — на нём спят не одну ночь.",
+    b3Title: "Прочная конструкция и полноразмерное спальное место",
+    b3Text: "Усиленный металлический каркас выдерживает до 150 кг и не прогибается под весом. Спальное место 190×68 см, высота 37 см — взрослому человеку хватает.",
+    b4Title: "Уже в Тбилиси — платите курьеру",
     proof: "Мы привозим эту модель в Тбилиси — не ждать посылку из-за границы и не платить за международную доставку: смотрите и платите курьеру.",
     b2bTitle: "Хостел, гестхаус или офис?",
     b2bPrice: "Оптовая цена от {min} штук — {price} за штуку",
@@ -913,13 +906,7 @@ const I18N = {
     b2bCta: "Оставьте номер — привезём образец",
     videoTitle: "Как это выглядит вживую",
     videoNote: "Видео снято нами, на этой же модели.",
-    whoTitle: "Кому пригодится",
-    who1t: "Гости дома",
-    who1p: "Компактно хранится в чехле, разворачивается за минуту — не нужно освобождать диван или искать надувной матрас.",
-    who2t: "Кемпинг и дача",
-    who2p: "Лёгкий металлический каркас не боится частой сборки-разборки и помещается в багажник.",
-    who3t: "Доп. спальное место",
-    who3p: "Для съёмной квартиры, детской или временного жилья — там, где стационарная кровать не оправдана.",
+    videoLede: "Раскладывается за считанные секунды и не требует сборки: достали из чехла, надавили по центру — готово.",
     orderTitle: "Как заказать",
     step1: "Оставьте имя и номер в форме — перезвоним и подтвердим наличие и доставку.",
     step2: "Подтверждаем заказ в разговоре — без предоплаты.",
@@ -963,24 +950,23 @@ const I18N = {
     deliveryFree: "free",
     ctaCall: "Call us",
     priceNote: "Price per unit. Delivery in Tbilisi — {delivery}, elsewhere in Georgia by courier. You pay on delivery.",
-    ctaFit: "Leave your number — we will tell you if it fits your room →",
-    ctaBook: "Order one — pay on delivery",
+    ctaOrder: "Order",
     altHero: "Folding bed with mattress, 190×68×37 cm, holds up to 150 kg",
-    altOwn: "A folding bed made up in an apartment, Tbilisi",
+    altUse: "The folding bed set up, and the same bed folded in its cover by the window",
     altFrame: "Reinforced steel frame, holds up to 150 kg",
     altCarry: "A woman carrying the folded bed in its cover over her shoulder",
-    altStorage: "The bed folded down to 21×17×101 cm",
     spec1v: "150 kg",  spec1l: "maximum load",
     spec2v: "190×68",  spec2l: "sleeping area, cm",
     spec3v: "21×17×101", spec3l: "folded, cm — fits a wardrobe",
     spec4v: "+ cover", spec4l: "for carrying and storage, included",
-    ownPhoto: "Our own photo, Tbilisi",
-    capCard: "Dimensions, load and what is in the box — in one picture",
-    capMattress: "6 cm mattress with polyester fibre filling",
     altMattress: "A 6 cm mattress with polyester fibre filling",
-    cap1: "Folds into its cover and goes on your shoulder",
-    cap2: "Folded, it fits a wardrobe or a car boot",
-    cap3: "Reinforced frame — holds up to 150 kg",
+    b1Title: "Outdoors and indoors",
+    b1Text: "Camping, a country house, a rented flat, a kids' room or temporary housing — anywhere a permanent bed makes no sense. The light steel frame survives constant folding, fits in a car boot and goes into a wardrobe once folded.",
+    b2Title: "Guests arrived and there is nowhere to sleep",
+    b2Text: "Stores flat in its cover and opens in a minute — no clearing the sofa, no hunting for an air mattress. The 6 cm mattress with polyester fibre filling is good for more than one night.",
+    b3Title: "A solid frame and a full-size sleeping area",
+    b3Text: "The reinforced steel frame holds up to 150 kg without sagging. The sleeping area is 190×68 cm and sits 37 cm off the floor — enough room for an adult.",
+    b4Title: "Already in Tbilisi — you pay the courier",
     proof: "We bring this model to Tbilisi — no month-long parcel, no international shipping: you see it and pay the courier.",
     b2bTitle: "Hostel, guesthouse or office?",
     b2bPrice: "Wholesale from {min} units — {price} each",
@@ -988,13 +974,7 @@ const I18N = {
     b2bCta: "Leave your number — we will bring a sample",
     videoTitle: "What it looks like in real life",
     videoNote: "Filmed by us, on this exact model.",
-    whoTitle: "Who it is for",
-    who1t: "Guests at home",
-    who1p: "Stores flat in its cover, opens in a minute — no clearing the sofa, no hunting for an air mattress.",
-    who2t: "Camping and country house",
-    who2p: "Light steel frame survives constant folding and fits in a car boot.",
-    who3t: "An extra bed",
-    who3p: "For a rented flat, a kids' room or temporary housing — where a permanent bed makes no sense.",
+    videoLede: "It opens in seconds and needs no assembly: out of the cover, one press in the middle — done.",
     orderTitle: "How to order",
     step1: "Leave your name and number in the form — we call you back and confirm availability and delivery.",
     step2: "We confirm the order on the call — no prepayment.",
@@ -1120,7 +1100,7 @@ const I18N = {
      Всё, что стоит ниже верхней формы, ведём в нижнюю, чтобы не гнать читателя назад. */
   const FORM_ANCHOR = {
     "chat": "#lead-top", "chat-sticky": "#lead-top",
-    "chat-fit": "#lead-form", "chat-book": "#lead-form", "chat-b2b": "#lead-form"
+    "chat-book": "#lead-form", "chat-b2b": "#lead-form"
   };
 
   /* Плавно доводим до формы, не трогая историю браузера: hash в адрес не пишется,
@@ -1201,11 +1181,10 @@ const I18N = {
     document.querySelectorAll("[data-i18n-alt]").forEach(el => { el.alt = fill(t[el.dataset.i18nAlt] || ""); });
     const set = IMAGES[lang] || IMAGES.ka;
     document.getElementById("img-hero").src = set.hero;
-    document.getElementById("img-card").src = set.own;
-    document.getElementById("img-mattress").src = set.mattress;
-    document.getElementById("img-carry").src = set.carry;
-    document.getElementById("img-storage").src = set.storage;
-    document.getElementById("img-frame").src = set.frame;
+    /* блок 4 один на все языки — цифр и надписей на нём нет, src стоит в разметке */
+    document.getElementById("img-b1").src = set.b1;
+    document.getElementById("img-b2").src = set.b2;
+    document.getElementById("img-b3").src = set.b3;
     document.getElementById("brand-name").textContent = CONFIG.brand;
     document.getElementById("price-retail").textContent = money(CONFIG.priceRetail);
     document.getElementById("b2b-price").textContent = fill(t.b2bPrice);
