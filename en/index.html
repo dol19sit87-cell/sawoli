@@ -305,6 +305,14 @@
   .zz > * { min-width: 0; }
   /* сторона чередуется: у блока с этим классом картинка уходит вправо */
   .zz--flip > :first-child { order: 2; }
+  /* Видео 540x960 показывается 298 css-px, иначе при плотности 2 оно мылится.
+     В колонке шириной 435 такой узкий кадр читается как ошибка вёрстки, поэтому
+     у блока с видео своя раскладка: колонка ровно по ширине кадра, а остаток
+     отдан тексту. Узость становится намеренной, резкость не страдает.
+     Правило стоит ДО медиазапроса, где .zz схлопывается в одну колонку:
+     специфичность у них одинаковая, побеждает то, что ниже по файлу. */
+  .zz--video { grid-template-columns: 300px 1fr; gap: 36px; }
+  .zz--video .zz-text p { max-width: 56ch; }
   .zz-media {
     border: 1px solid var(--line);
     border-radius: 3px;
@@ -596,7 +604,7 @@
     <input type="hidden" name="source" value="">
     <input type="hidden" name="campaign" value="">
     <input type="hidden" name="place" value="top">
-    <h2 data-i18n="shortFormTitle">Leave your number — we will call back</h2>
+    <h2 data-i18n="shortFormTitle">Leave your number — we will get in touch and tell you more</h2>
     <p class="sub" data-i18n="shortFormText">Two fields, takes a second. We will advise on size and delivery.</p>
     <div class="short-row">
       <label class="sr"><span data-i18n="fName">Name</span>
@@ -618,7 +626,7 @@
     <div class="spec"><p class="spec-v" data-i18n="spec4v">+ cover</p><p class="spec-l" data-i18n="spec4l">for carrying and storage, included</p></div>
   </div>
 
-  <section class="zz" id="video-section" hidden>
+  <section class="zz zz--video" id="video-section" hidden>
     <div class="video-wrap">
       <video id="product-video" controls playsinline preload="metadata"></video>
     </div>
@@ -631,17 +639,17 @@
 
   <section class="zz zz--flip">
     <div class="zz-media">
-      <img id="img-b1" src="../img/b1_en.jpg" alt="" width="520" height="497" loading="lazy" data-i18n-alt="altUse">
+      <img id="img-b1" src="../img/b1.jpg" alt="" width="1300" height="1300" loading="lazy" data-i18n-alt="altUse">
     </div>
     <div class="zz-text">
-      <h2 data-i18n="b1Title">Outdoors and indoors</h2>
-      <p data-i18n="b1Text">Camping, a country house, a rented flat, a kids' room or temporary housing — anywhere a permanent bed makes no sense. The light steel frame survives constant folding, fits in a car boot and goes into a wardrobe once folded.</p>
+      <h2 data-i18n="b1Title">Unfolded it is a bed, folded it goes in the wardrobe</h2>
+      <p data-i18n="b1Text">A rented flat, a kids' room, a country house or temporary housing — anywhere a permanent bed makes no sense. The light steel frame survives constant folding. Folded it measures 21×17×101 cm: it fits in a car boot and goes into a wardrobe. The carry bag is included.</p>
     </div>
   </section>
 
   <section class="zz">
     <div class="zz-media">
-      <img id="img-b2" src="../img/b2_en.jpg" alt="" width="424" height="294" loading="lazy" data-i18n-alt="altMattress">
+      <img id="img-b2" src="../img/b2.jpg" alt="" width="1300" height="939" loading="lazy" data-i18n-alt="altMattress">
     </div>
     <div class="zz-text">
       <h2 data-i18n="b2Title">Guests arrived and there is nowhere to sleep</h2>
@@ -651,17 +659,17 @@
 
   <section class="zz zz--flip">
     <div class="zz-media">
-      <img id="img-b3" src="../img/b3_en.jpg" alt="" width="520" height="543" loading="lazy" data-i18n-alt="altFrame">
+      <img id="img-b3" src="../img/b3.jpg" alt="" width="1300" height="867" loading="lazy" data-i18n-alt="altFrame">
     </div>
     <div class="zz-text">
       <h2 data-i18n="b3Title">A solid frame and a full-size sleeping area</h2>
-      <p data-i18n="b3Text">The reinforced steel frame holds up to 150 kg without sagging. The sleeping area is 190×68 cm and sits 37 cm off the floor — enough room for an adult.</p>
+      <p data-i18n="b3Text">The reinforced steel frame holds up to 150 kg without sagging. The sleeping area is 190×68 cm — enough room for an adult. The frame itself stands 37 cm high; with the mattress on top, that is up to the surface you sleep on, it is 49 cm.</p>
     </div>
   </section>
 
   <section class="zz">
     <div class="zz-media">
-      <img id="img-b4" src="../img/b4.jpg" alt="" width="790" height="1020" loading="lazy" data-i18n-alt="altCarry">
+      <img id="img-b4" src="../img/b4.jpg" alt="" width="1300" height="1625" loading="lazy" data-i18n-alt="altCarry">
     </div>
     <div class="zz-text">
       <h2 data-i18n="b4Title">Already in Tbilisi — you pay the courier</h2>
@@ -674,8 +682,8 @@
   <section>
     <h2 data-i18n="orderTitle">How to order</h2>
     <ol class="steps">
-      <li data-i18n="step1">Leave your name and number in the form — we call you back and confirm availability and delivery.</li>
-      <li data-i18n="step2">We confirm the order on the call — no prepayment.</li>
+      <li data-i18n="step1">Leave your name and number in the form — we get in touch the way you chose and confirm availability and delivery.</li>
+      <li data-i18n="step2">We confirm the order in chat or by phone — no prepayment.</li>
       <li data-i18n="step3">You pay on delivery, to the courier — cash or bank transfer. We ship to any city in Georgia.</li>
     </ol>
     <div class="trust">
@@ -747,7 +755,7 @@
 </div>
 
 <script>
-const IMAGES = {"ka": {"hero": "../img/card_ka.jpg", "b1": "../img/b1_ka.jpg", "b2": "../img/b2_ka.jpg", "b3": "../img/b3_ka.jpg"}, "ru": {"hero": "../img/card_ru.jpg", "b1": "../img/b1_ru.jpg", "b2": "../img/b2_ru.jpg", "b3": "../img/b3_ru.jpg"}, "en": {"hero": "../img/card_en.jpg", "b1": "../img/b1_en.jpg", "b2": "../img/b2_en.jpg", "b3": "../img/b3_en.jpg"}};
+const IMAGES = {"ka": {"hero": "../img/card_ka.jpg"}, "ru": {"hero": "../img/card_ru.jpg"}, "en": {"hero": "../img/card_en.jpg"}};
 
 /* ================================================================
    CONFIG — единственное место, которое нужно править руками.
@@ -815,21 +823,21 @@ const I18N = {
     ctaCall: "დარეკვა",
     priceNote: "ერთი ცალის ფასი. მიწოდება თბილისში — {delivery}, საქართველოს სხვა ქალაქებში — კურიერით. გადახდა მიღებისას.",
     ctaOrder: "შეუკვეთეთ",
-    altHero: "დასაკეცი საწოლი მატრასით, 190×68×37 სმ, დატვირთვა 150 კგ-მდე",
-    altUse: "გაშლილი დასაკეცი საწოლი და იგივე დაკეცილი, ჩანთაში, ფანჯარასთან",
-    altFrame: "გამაგრებული მეტალის კარკასი, უძლებს 150 კგ-მდე",
+    altHero: "დასაკეცი საწოლი მატრასით: სასაწოლე ადგილი 190×68 სმ, კარკასის სიმაღლე 37 სმ, დატვირთვა 150 კგ-მდე",
+    altUse: "გაშლილი დასაკეცი საწოლი ოთახში და იგივე საწოლი დაკეცილი, ფანჯარასთან",
+    altFrame: "დასაკეცი საწოლი ბოლოდან: ჯვარედინი მეტალის კარკასი სასაწოლე ადგილის ქვეშ",
     altCarry: "ქალს დაკეცილი საწოლი ჩანთით მხარზე გადაკიდებული",
     spec1v: "150 კგ",  spec1l: "მაქსიმალური დატვირთვა",
     spec2v: "190×68",  spec2l: "სასაწოლე ადგილი, სმ",
     spec3v: "21×17×101", spec3l: "დაკეცილი, სმ — ეტევა კარადაში",
     spec4v: "+ ჩანთა", spec4l: "გადასატანად და შესანახად, კომპლექტში",
-    altMattress: "მატრასის სისქე 6 სმ, სინთეპონის შიგთავსი",
-    b1Title: "გარეთაც და სახლშიც",
-    b1Text: "ლაშქრობა, აგარაკი, ქირით ბინა, საბავშვო ოთახი ან დროებითი საცხოვრებელი — სადაც მუდმივი საწოლისთვის ადგილი არ არის. მსუბუქი მეტალის კარკასი ხშირ აწყობა-დაშლას უძლებს, საბარგულში ეტევა, დაკეცილი კი კარადაში ინახება.",
+    altMattress: "ახლო ხედი: სქელი ნაკერიანი მატრასი დასაკეცი საწოლის მეტალის კარკასზე",
+    b1Title: "გაშლილი — საწოლი, დაკეცილი — კარადაში",
+    b1Text: "ქირით ბინა, საბავშვო ოთახი, აგარაკი ან დროებითი საცხოვრებელი — სადაც მუდმივი საწოლისთვის ადგილი არ არის. მსუბუქი მეტალის კარკასი ხშირ აწყობა-დაშლას უძლებს. დაკეცილი 21×17×101 სმ: ეტევა საბარგულში და ინახება კარადაში. გადასატანი ჩანთა კომპლექტშია.",
     b2Title: "სტუმრები მოვიდნენ, დასაძინებელი ადგილი კი არ არის",
     b2Text: "ჩანთაში კომპაქტურად ინახება, გაშლას ერთი წუთი სჭირდება — აღარ დაგჭირდებათ დივანის გათავისუფლება ან გასაბერი ლეიბი. მატრასი 6 სმ, სინთეპონის შიგთავსით — ერთ ღამეზე მეტსაც გამოდგება.",
     b3Title: "გამაგრებული კონსტრუქცია და სრულფასოვანი საძინებელი ადგილი",
-    b3Text: "გამაგრებული მეტალის კარკასი 150 კგ-მდე უძლებს და წონის ქვეშ არ იღუნება. სასაწოლე ადგილი 190×68 სმ, სიმაღლე 37 სმ — ზრდასრული ადამიანისთვის საკმარისი.",
+    b3Text: "გამაგრებული მეტალის კარკასი 150 კგ-მდე უძლებს და წონის ქვეშ არ იღუნება. სასაწოლე ადგილი 190×68 სმ — ზრდასრული ადამიანისთვის საკმარისი. კარკასის სიმაღლე 37 სმ, მატრასთან ერთად კი, ანუ იმ ზედაპირამდე, რომელზეც წევხართ, — 49 სმ.",
     b4Title: "უკვე თბილისშია — გადაიხდით კურიერთან",
     proof: "ჩვენ ამ მოდელს თბილისში ჩამოგიტანთ — ლოდინისა და საზღვარგარეთიდან მიწოდების გარეშე: ნახავთ და გადაიხდით კურიერთან.",
     b2bTitle: "ჰოსტელი, საოჯახო სასტუმრო ან ოფისი?",
@@ -840,8 +848,8 @@ const I18N = {
     videoNote: "ვიდეო გადაღებულია ჩვენ მიერ, იმავე მოდელზე.",
     videoLede: "წამებში იშლება და აწყობა არ სჭირდება: ჩანთიდან ამოიღეთ, ცენტრში დააჭირეთ — მზადაა.",
     orderTitle: "როგორ შევუკვეთოთ",
-    step1: "დატოვეთ სახელი და ნომერი ფორმაში — დაგირეკავთ და დაგიდასტურებთ ხელმისაწვდომობასა და მიწოდებას.",
-    step2: "შეკვეთას ვადასტურებთ სატელეფონო საუბარში — წინასწარი გადახდის გარეშე.",
+    step1: "დატოვეთ სახელი და ნომერი ფორმაში — დაგიკავშირდებით თქვენ მიერ არჩეული გზით და დაგიდასტურებთ ხელმისაწვდომობასა და მიწოდებას.",
+    step2: "შეკვეთას ვადასტურებთ მიმოწერაში ან ტელეფონით — წინასწარი გადახდის გარეშე.",
     step3: "გადაიხდით მიღებისას, კურიერთან — ნაღდი ან გადარიცხვით. ვაგზავნით საქართველოს ნებისმიერ ქალაქში.",
     trust1: "გადახდა მიღებისას",
     trust2: "დაბრუნება 14 დღის განმავლობაში",
@@ -883,21 +891,21 @@ const I18N = {
     ctaCall: "Позвонить",
     priceNote: "Цена за штуку. Доставка по Тбилиси — {delivery}, по остальной Грузии — курьерской службой. Оплата при получении.",
     ctaOrder: "Заказать",
-    altHero: "Раскладушка с матрасом, 190×68×37 см, нагрузка до 150 кг",
-    altUse: "Разложенная раскладушка и она же в сложенном виде, в чехле у окна",
-    altFrame: "Усиленный металлический каркас, выдерживает до 150 кг",
+    altHero: "Раскладушка с матрасом: спальное место 190×68 см, высота каркаса 37 см, нагрузка до 150 кг",
+    altUse: "Разложенная раскладушка в комнате и она же сложенная, стоит у окна",
+    altFrame: "Раскладушка с торца: перекрёстный металлический каркас под спальным местом",
     altCarry: "Женщина несёт сложенную раскладушку в чехле на плече",
     spec1v: "150 кг",   spec1l: "максимальная нагрузка",
     spec2v: "190×68",   spec2l: "спальное место, см",
     spec3v: "21×17×101", spec3l: "в сложенном виде, см — помещается в шкаф",
     spec4v: "+ чехол",  spec4l: "для переноски и хранения, в комплекте",
-    altMattress: "Матрас толщиной 6 см с синтепоновым наполнителем",
-    b1Title: "На улице и в помещении",
-    b1Text: "Кемпинг, дача, съёмная квартира, детская или временное жильё — там, где стационарная кровать не оправдана. Лёгкий металлический каркас не боится частой сборки-разборки, помещается в багажник, а в сложенном виде убирается в шкаф.",
+    altMattress: "Крупный план: толстый стёганый матрас на металлическом каркасе раскладушки",
+    b1Title: "Разложена — кровать, сложена — убрана в шкаф",
+    b1Text: "Съёмная квартира, детская, дача или временное жильё — там, где стационарная кровать не оправдана. Лёгкий металлический каркас не боится частой сборки-разборки. В сложенном виде 21×17×101 см: помещается в багажник и убирается в шкаф. Сумка для переноски — в комплекте.",
     b2Title: "Приехали гости, а спать негде",
     b2Text: "Компактно хранится в чехле, разворачивается за минуту — не нужно освобождать диван или искать надувной матрас. Матрас 6 см с синтепоновым наполнителем — на нём спят не одну ночь.",
     b3Title: "Прочная конструкция и полноразмерное спальное место",
-    b3Text: "Усиленный металлический каркас выдерживает до 150 кг и не прогибается под весом. Спальное место 190×68 см, высота 37 см — взрослому человеку хватает.",
+    b3Text: "Усиленный металлический каркас выдерживает до 150 кг и не прогибается под весом. Спальное место 190×68 см — взрослому человеку хватает. Высота каркаса 37 см, а вместе с матрасом, то есть до поверхности, на которой вы спите, — 49 см.",
     b4Title: "Уже в Тбилиси — платите курьеру",
     proof: "Мы привозим эту модель в Тбилиси — не ждать посылку из-за границы и не платить за международную доставку: смотрите и платите курьеру.",
     b2bTitle: "Хостел, гестхаус или офис?",
@@ -908,12 +916,12 @@ const I18N = {
     videoNote: "Видео снято нами, на этой же модели.",
     videoLede: "Раскладывается за считанные секунды и не требует сборки: достали из чехла, надавили по центру — готово.",
     orderTitle: "Как заказать",
-    step1: "Оставьте имя и номер в форме — перезвоним и подтвердим наличие и доставку.",
-    step2: "Подтверждаем заказ в разговоре — без предоплаты.",
+    step1: "Оставьте имя и номер в форме — свяжемся тем способом, который вы выбрали, и подтвердим наличие и доставку.",
+    step2: "Заказ подтверждаем в переписке или по телефону — без предоплаты.",
     step3: "Платите при получении, курьеру — наличными или переводом. Отправляем в любой город Грузии.",
     trust1: "Оплата при получении",
     trust2: "Возврат в течение 14 дней",
-    shortFormTitle: "Оставьте номер — перезвоним и всё расскажем",
+    shortFormTitle: "Оставьте номер — свяжемся и всё расскажем",
     shortFormText: "Два поля, займёт секунду. Подскажем по размеру и доставке.",
     formTitle: "Оставьте номер — свяжемся сами",
     formText: "Оставьте номер и укажите, как вам ответить.",
@@ -951,21 +959,21 @@ const I18N = {
     ctaCall: "Call us",
     priceNote: "Price per unit. Delivery in Tbilisi — {delivery}, elsewhere in Georgia by courier. You pay on delivery.",
     ctaOrder: "Order",
-    altHero: "Folding bed with mattress, 190×68×37 cm, holds up to 150 kg",
-    altUse: "The folding bed set up, and the same bed folded in its cover by the window",
-    altFrame: "Reinforced steel frame, holds up to 150 kg",
+    altHero: "Folding bed with mattress: sleeping area 190×68 cm, frame height 37 cm, holds up to 150 kg",
+    altUse: "The folding bed set up in a room, and the same bed folded and standing by the window",
+    altFrame: "The folding bed seen end-on: the criss-cross steel frame under the sleeping area",
     altCarry: "A woman carrying the folded bed in its cover over her shoulder",
     spec1v: "150 kg",  spec1l: "maximum load",
     spec2v: "190×68",  spec2l: "sleeping area, cm",
     spec3v: "21×17×101", spec3l: "folded, cm — fits a wardrobe",
     spec4v: "+ cover", spec4l: "for carrying and storage, included",
-    altMattress: "A 6 cm mattress with polyester fibre filling",
-    b1Title: "Outdoors and indoors",
-    b1Text: "Camping, a country house, a rented flat, a kids' room or temporary housing — anywhere a permanent bed makes no sense. The light steel frame survives constant folding, fits in a car boot and goes into a wardrobe once folded.",
+    altMattress: "Close-up: the thick quilted mattress on the steel frame of the folding bed",
+    b1Title: "Unfolded it is a bed, folded it goes in the wardrobe",
+    b1Text: "A rented flat, a kids' room, a country house or temporary housing — anywhere a permanent bed makes no sense. The light steel frame survives constant folding. Folded it measures 21×17×101 cm: it fits in a car boot and goes into a wardrobe. The carry bag is included.",
     b2Title: "Guests arrived and there is nowhere to sleep",
     b2Text: "Stores flat in its cover and opens in a minute — no clearing the sofa, no hunting for an air mattress. The 6 cm mattress with polyester fibre filling is good for more than one night.",
     b3Title: "A solid frame and a full-size sleeping area",
-    b3Text: "The reinforced steel frame holds up to 150 kg without sagging. The sleeping area is 190×68 cm and sits 37 cm off the floor — enough room for an adult.",
+    b3Text: "The reinforced steel frame holds up to 150 kg without sagging. The sleeping area is 190×68 cm — enough room for an adult. The frame itself stands 37 cm high; with the mattress on top, that is up to the surface you sleep on, it is 49 cm.",
     b4Title: "Already in Tbilisi — you pay the courier",
     proof: "We bring this model to Tbilisi — no month-long parcel, no international shipping: you see it and pay the courier.",
     b2bTitle: "Hostel, guesthouse or office?",
@@ -976,12 +984,12 @@ const I18N = {
     videoNote: "Filmed by us, on this exact model.",
     videoLede: "It opens in seconds and needs no assembly: out of the cover, one press in the middle — done.",
     orderTitle: "How to order",
-    step1: "Leave your name and number in the form — we call you back and confirm availability and delivery.",
-    step2: "We confirm the order on the call — no prepayment.",
+    step1: "Leave your name and number in the form — we get in touch the way you chose and confirm availability and delivery.",
+    step2: "We confirm the order in chat or by phone — no prepayment.",
     step3: "You pay on delivery, to the courier — cash or bank transfer. We ship to any city in Georgia.",
     trust1: "Payment on delivery",
     trust2: "14-day returns",
-    shortFormTitle: "Leave your number — we will call back",
+    shortFormTitle: "Leave your number — we will get in touch and tell you more",
     shortFormText: "Two fields, takes a second. We will advise on size and delivery.",
     formTitle: "Leave your number — we will get back to you",
     formText: "Leave a number and tell us how to reach you.",
@@ -1144,8 +1152,9 @@ const I18N = {
       /* Все кнопки ведут на форму: нужны имя и телефон на сайте, а не переписка. */
       const anchor = CONFIG.formFirst ? FORM_ANCHOR[kind] : null;
       const channel = anchor ? "form" : (isChat ? resolveChat() : kind.split("-")[0]);
-      const noCallHere = channel === "phone" && lang === "ka";   // по-грузински мы не говорим
-      const href = channel && !noCallHere ? hrefFor(channel, b2b, anchor) : null;
+      /* Кнопка звонка одинаково доступна на всех трёх языках: решение владелицы,
+         запуск тестовый и звонки она берёт сама. Языкового исключения здесь больше нет. */
+      const href = channel ? hrefFor(channel, b2b, anchor) : null;
       if (href) {
         el.href = href;
         el.hidden = false;
@@ -1181,10 +1190,9 @@ const I18N = {
     document.querySelectorAll("[data-i18n-alt]").forEach(el => { el.alt = fill(t[el.dataset.i18nAlt] || ""); });
     const set = IMAGES[lang] || IMAGES.ka;
     document.getElementById("img-hero").src = set.hero;
-    /* блок 4 один на все языки — цифр и надписей на нём нет, src стоит в разметке */
-    document.getElementById("img-b1").src = set.b1;
-    document.getElementById("img-b2").src = set.b2;
-    document.getElementById("img-b3").src = set.b3;
+    /* Блоки 1-4 одни на все языки: цифр и надписей на этих картинках нет,
+       все размеры переехали в текст блоков. src стоит прямо в разметке
+       и при смене языка не трогается — меняется только герой. */
     document.getElementById("brand-name").textContent = CONFIG.brand;
     document.getElementById("price-retail").textContent = money(CONFIG.priceRetail);
     document.getElementById("b2b-price").textContent = fill(t.b2bPrice);
@@ -1215,8 +1223,8 @@ const I18N = {
     const barForm = document.getElementById("bar-form");
     // в режиме формы соседняя chat-sticky уже ведёт на форму — второй такой же кнопки не надо
     if (barForm) barForm.hidden = CONFIG.formFirst ? true : !!resolveChat();
-    const callOption = document.querySelector('.prefer input[value="call"]');
-    if (callOption) callOption.closest("label").hidden = (lang === "ka");
+    /* Способ «звонком» показывается на всех языках — раньше он прятался на
+       грузинской версии, теперь такого исключения нет. */
     /* Значение по умолчанию берётся ровно из одного места — CONFIG.preferDefault,
        и не зависит ни от языка, ни от resolveChat(). Уже сделанный посетителем
        выбор не сбрасываем: иначе смена языка молча меняет его ответ. */
