@@ -250,6 +250,7 @@
 
   .price-block { display: flex; align-items: baseline; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
   .price { font-family: "Oswald", sans-serif; font-size: 32px; font-weight: 600; color: var(--signal); }
+  .price-old { font-family: "Oswald", sans-serif; font-size: 22px; font-weight: 600; color: var(--muted); text-decoration: line-through; }
   .price-note { font-size: 13.5px; color: var(--muted); }
 
   .photo img { width: 100%; height: auto; display: block; }
@@ -546,13 +547,28 @@
       transition: transform 0.2s ease;
     }
     .mobile-bar.tucked { transform: translateY(130%); }
+    .mobile-bar .bar-prices {
+      display: flex;
+      flex: 0 0 auto;
+      align-items: baseline;
+      gap: 5px;
+      padding-left: 4px;
+      white-space: nowrap;
+    }
     .mobile-bar .bar-price {
       font-family: "Oswald", sans-serif;
       font-size: 19px;
       font-weight: 600;
       color: var(--signal);
       white-space: nowrap;
-      padding-left: 4px;
+    }
+    .mobile-bar .bar-price-old {
+      font-family: "Oswald", sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--muted);
+      text-decoration: line-through;
+      white-space: nowrap;
     }
     .mobile-bar .btn { flex: 1; justify-content: center; padding: 12px 8px; font-size: 14.5px; white-space: nowrap; }
   }
@@ -587,7 +603,8 @@
         <a class="btn btn-ghost" data-cta="phone" href="#" data-i18n="ctaCall">Позвонить</a>
       </div>
       <div class="price-block">
-        <span class="price" id="price-retail">249 ₾</span>
+        <span class="price-old" id="price-old">249 ₾</span>
+        <span class="price" id="price-retail">149 ₾</span>
         <span class="price-note" data-i18n="priceNote">Цена за штуку. Доставка по Тбилиси — 15 ₾, по остальной Грузии — курьерской службой. Оплата при получении.</span>
       </div>
     </div>
@@ -724,7 +741,7 @@
   <section>
     <div class="b2b">
       <h2 data-i18n="b2bTitle">Хостел, гестхаус или офис?</h2>
-      <p class="b2b-price" id="b2b-price">Оптовая цена от 5 штук — 229 ₾ за штуку</p>
+      <p class="b2b-price" id="b2b-price">Оптовая цена от 5 штук — 129 ₾ за штуку</p>
       <p data-i18n="b2bText">Привезём образец в Тбилиси бесплатно — посмотрите вживую и решите. Сроки и цену на партию согласуем отдельно.</p>
       <a class="btn btn-primary" data-cta="chat-b2b" href="#" data-i18n="b2bCta">Оставьте номер — привезём образец</a>
     </div>
@@ -739,7 +756,7 @@
 </div>
 
 <div class="mobile-bar" id="mobile-bar">
-  <span class="bar-price" id="bar-price"></span>
+  <span class="bar-prices"><span class="bar-price-old" id="bar-price-old">249 ₾</span><span class="bar-price" id="bar-price">149 ₾</span></span>
   <a class="btn btn-primary" data-cta="chat-sticky" href="#" data-i18n="ctaLeaveNumber">Оставить номер</a>
   <a class="btn btn-primary" id="bar-form" href="#lead-top" data-i18n="ctaLeaveNumber">Оставить номер</a>
 </div>
@@ -791,8 +808,10 @@ const CONFIG = {
   videoUrl: "../video/odra.mp4",  // пусто = блок скрыт
   videoPoster: "../video/odra-poster.jpg",
 
-  priceRetail:    249,         // цена за штуку, ₾
-  priceWholesale: 229,         // оптовая цена за штуку, ₾
+  priceRetail:    149,         // цена за штуку, ₾
+  priceOld:       249,         // старая цена, ₾; пусто или = priceRetail — зачёркнутой цены нет.
+                               // ВНИМАНИЕ: при откате править ещё и пре-рендер в разметке (span.price-old и span.bar-price-old)
+  priceWholesale: 129,         // оптовая цена за штуку, ₾
   wholesaleMin:   5,           // от скольки штук опт
   deliveryTbilisi: 15,         // доставка по Тбилиси, ₾ (0 = бесплатно)
 
@@ -1198,6 +1217,13 @@ const I18N = {
        и при смене языка не трогается — меняется только герой. */
     document.getElementById("brand-name").textContent = CONFIG.brand;
     document.getElementById("price-retail").textContent = money(CONFIG.priceRetail);
+    /* Старая цена показывается, только если она задана и отличается от текущей. */
+    const showOldPrice = !!CONFIG.priceOld && CONFIG.priceOld !== CONFIG.priceRetail;
+    const priceOldEl = document.getElementById("price-old");
+    if (priceOldEl) {
+      priceOldEl.textContent = money(CONFIG.priceOld);
+      priceOldEl.hidden = !showOldPrice;
+    }
     document.getElementById("b2b-price").textContent = fill(t.b2bPrice);
     document.getElementById("footer-text").textContent = fill(t.footer);
     const legalLine = document.getElementById("legal-line");
@@ -1223,6 +1249,11 @@ const I18N = {
     }
     const barPrice = document.getElementById("bar-price");
     if (barPrice) barPrice.textContent = money(CONFIG.priceRetail);
+    const barPriceOld = document.getElementById("bar-price-old");
+    if (barPriceOld) {
+      barPriceOld.textContent = money(CONFIG.priceOld);
+      barPriceOld.hidden = !showOldPrice;
+    }
     const barForm = document.getElementById("bar-form");
     // в режиме формы соседняя chat-sticky уже ведёт на форму — второй такой же кнопки не надо
     if (barForm) barForm.hidden = CONFIG.formFirst ? true : !!resolveChat();
