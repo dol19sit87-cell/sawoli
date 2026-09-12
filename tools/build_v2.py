@@ -33,6 +33,32 @@ RENDER_ADD = '''    /* v2: every price, count and discount on the page is taken 
 '''
 RENDER_ANCHOR = '    document.getElementById("b2b-price").textContent = fill(t.b2bPrice);'
 
+TUCK_OLD = """  (function tuckBar() {
+    const bar = document.getElementById("mobile-bar");
+    const anchor = document.querySelector(".hero .price-block");
+    if (!bar || !anchor || !("IntersectionObserver" in window)) return;
+    new IntersectionObserver(es => {
+      bar.classList.toggle("tucked", es[0].isIntersecting);
+    }, { threshold: 0.6 }).observe(anchor);
+  })();"""
+TUCK_NEW = """  /* v2: the bar also hides while either form is on screen — after a CTA jump it used to
+     sit on top of the form's submit button and the consent line. */
+  (function tuckBar() {
+    const bar = document.getElementById("mobile-bar");
+    const price = document.querySelector(".hero .price-block");
+    if (!bar || !("IntersectionObserver" in window)) return;
+    const on = new Set();
+    const io = new IntersectionObserver(es => {
+      es.forEach(e => {
+        const hit = e.target === price ? e.intersectionRatio >= 0.6 : e.isIntersecting;
+        if (hit) on.add(e.target); else on.delete(e.target);
+      });
+      bar.classList.toggle("tucked", on.size > 0);
+    }, { threshold: [0, 0.6] });
+    if (price) io.observe(price);
+    document.querySelectorAll("form.lead-form").forEach(f => io.observe(f));
+  })();"""
+
 
 def parse_i18n(js):
     i = js.index("const I18N = {")
@@ -100,6 +126,8 @@ def build(lang):
         js = js.replace(head, head + lines, 1)
     assert js.count(RENDER_ANCHOR) == 1
     js = js.replace(RENDER_ANCHOR, RENDER_ADD + RENDER_ANCHOR, 1)
+    assert js.count(TUCK_OLD) == 1
+    js = js.replace(TUCK_OLD, TUCK_NEW, 1)
 
     # ---- head: v1 head with light colour scheme, noindex for the preview, new description
     head = src[: src.index("</head>")]

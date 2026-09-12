@@ -1115,13 +1115,22 @@ const I18N = {
   }
 
   /* пока кнопка в герое на экране, липкая панель не нужна */
+  /* v2: the bar also hides while either form is on screen — after a CTA jump it used to
+     sit on top of the form's submit button and the consent line. */
   (function tuckBar() {
     const bar = document.getElementById("mobile-bar");
-    const anchor = document.querySelector(".hero .price-block");
-    if (!bar || !anchor || !("IntersectionObserver" in window)) return;
-    new IntersectionObserver(es => {
-      bar.classList.toggle("tucked", es[0].isIntersecting);
-    }, { threshold: 0.6 }).observe(anchor);
+    const price = document.querySelector(".hero .price-block");
+    if (!bar || !("IntersectionObserver" in window)) return;
+    const on = new Set();
+    const io = new IntersectionObserver(es => {
+      es.forEach(e => {
+        const hit = e.target === price ? e.intersectionRatio >= 0.6 : e.isIntersecting;
+        if (hit) on.add(e.target); else on.delete(e.target);
+      });
+      bar.classList.toggle("tucked", on.size > 0);
+    }, { threshold: [0, 0.6] });
+    if (price) io.observe(price);
+    document.querySelectorAll("form.lead-form").forEach(f => io.observe(f));
   })();
 
   document.querySelectorAll("form.lead-form").forEach(form => {
