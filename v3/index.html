@@ -169,6 +169,12 @@
     font-size: 12px; font-weight: 800; display: grid; place-items: center; margin-top: 2px;
   }
 
+  .media-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 18px; }
+  @media (min-width: 760px) { .media-grid { grid-template-columns: repeat(5, 1fr); } }
+  .media-grid button { aspect-ratio: 3 / 4; border-radius: 12px; overflow: hidden; padding: 0; border: 0; background: var(--soft); cursor: zoom-in; position: relative; }
+  .media-grid img, .media-grid video { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .media-grid .play { position: absolute; right: 8px; top: 8px; width: 28px; height: 28px; border-radius: 50%; background: rgba(0,0,0,.55); color: #fff; font-size: 12px; display: grid; place-items: center; }
+  .media-sub { text-align: center; color: var(--muted); margin: 6px 0 0; font-size: 15px; }
   .ugc-title { font-size: 13px; font-weight: 700; margin: 18px 0 8px; }
   .ugc { display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
   .ugc::-webkit-scrollbar { display: none; }
@@ -319,6 +325,7 @@
   .lb-track { display: flex; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
   .lb-track::-webkit-scrollbar { display: none; }
   .lb-track figure { flex: 0 0 100%; margin: 0; scroll-snap-align: center; display: grid; place-items: center; padding: 56px 12px; }
+  .lb-track video { max-width: 100%; max-height: calc(100dvh - 112px); border-radius: 10px; background: #000; }
   .lb-track img { max-width: 100%; max-height: calc(100dvh - 112px); object-fit: contain; border-radius: 10px; }
   .lb-nav, .lb-x { position: absolute; border: 0; background: rgba(255,255,255,.16); color: #fff; cursor: pointer; border-radius: 50%; width: 44px; height: 44px; font-size: 28px; line-height: 1; display: grid; place-items: center; }
   .lb-nav { top: 50%; transform: translateY(-50%); }
@@ -495,6 +502,24 @@
       <div class="lbl" data-i18n="r3"></div><div class="us" data-i18n="r3a"></div><div class="them" data-i18n="r3b"></div>
       <div class="lbl" data-i18n="r4"></div><div class="us" data-i18n="r4a"></div><div class="them" data-i18n="r4b"></div>
       <div class="lbl" data-i18n="r5"></div><div class="us" data-i18n="r5a"></div><div class="them" data-i18n="r5b"></div>
+    </div>
+  </section>
+
+  <!-- ======= фото и видео покупателей ======= -->
+  <section id="media" style="padding-top:8px">
+    <h2 class="center" data-i18n="mediaTitle"></h2>
+    <p class="media-sub" data-i18n="mediaSub"></p>
+    <div class="media-grid" id="media-grid">
+        <button type="button" data-src="reviews/oksana-2.jpg"><img src="reviews/oksana-2.jpg" alt="" loading="lazy"></button>
+        <button type="button" data-src="reviews/video-unfold.mp4"><video src="reviews/video-unfold.mp4" poster="reviews/video-unfold.jpg" muted loop playsinline preload="none"></video><span class="play">▶</span></button>
+        <button type="button" data-src="reviews/video-legs.mp4"><video src="reviews/video-legs.mp4" poster="reviews/video-legs.jpg" muted loop playsinline preload="none"></video><span class="play">▶</span></button>
+        <button type="button" data-src="reviews/tatyana-1.jpg"><img src="reviews/tatyana-1.jpg" alt="" loading="lazy"></button>
+        <button type="button" data-src="reviews/elena-2.jpg"><img src="reviews/elena-2.jpg" alt="" loading="lazy"></button>
+        <button type="button" data-src="reviews/video-box.mp4"><video src="reviews/video-box.mp4" poster="reviews/video-box.jpg" muted loop playsinline preload="none"></video><span class="play">▶</span></button>
+        <button type="button" data-src="reviews/video-mattress.mp4"><video src="reviews/video-mattress.mp4" poster="reviews/video-mattress.jpg" muted loop playsinline preload="none"></video><span class="play">▶</span></button>
+        <button type="button" data-src="reviews/oksana-1.jpg"><img src="reviews/oksana-1.jpg" alt="" loading="lazy"></button>
+        <button type="button" data-src="reviews/tatyana-2.jpg"><img src="reviews/tatyana-2.jpg" alt="" loading="lazy"></button>
+        <button type="button" data-src="reviews/video-ready.mp4"><video src="reviews/video-ready.mp4" poster="reviews/video-ready.jpg" muted loop playsinline preload="none"></video><span class="play">▶</span></button>
     </div>
   </section>
 
@@ -726,6 +751,8 @@ const I18N = {
     c2: "6 სმ მატრასი უკვე კომპლექტშია",
     c3: "მეტალის კარკასი 150 კგ-მდე, არ ჭრიალებს",
     ugcTitle: "მყიდველების ფოტოები",
+    mediaTitle: "მყიდველების ფოტოები და ვიდეოები",
+    mediaSub: "ნამდვილი ფოტოები და ვიდეო მიმოხილვები. დააჭირეთ სანახავად.",
     paybox: "გადახდა მხოლოდ ნაღდი ფულით, კურიერთან მიღებისას",
     lifeTitle: "სტუმრები მოვიდნენ? საწოლი მზადაა",
     lifeText: "ჩანთიდან ამოიღეთ, გაშალეთ, გადააფარეთ — დილით დაკეცეთ და კარადაში შეინახეთ.",
@@ -818,6 +845,8 @@ const I18N = {
     c2: "Матрас 6 см уже в комплекте",
     c3: "Металлический каркас до 150 кг, не скрипит",
     ugcTitle: "Фото покупателей",
+    mediaTitle: "Фото и видео покупателей",
+    mediaSub: "Настоящие фото и видеообзор от покупателей. Нажмите, чтобы посмотреть.",
     paybox: "Оплата только наличными курьеру при получении",
     lifeTitle: "Приехали гости? Кровать готова",
     lifeText: "Достали из чехла, разложили, застелили. Утром сложили и убрали в шкаф.",
@@ -910,6 +939,8 @@ const I18N = {
     c2: "6 cm mattress included",
     c3: "Steel frame holds up to 150 kg, no creaking",
     ugcTitle: "Buyer photos",
+    mediaTitle: "Buyer photos and videos",
+    mediaSub: "Real photos and a video review from buyers. Tap to view.",
     paybox: "Cash only, paid to the courier on delivery",
     lifeTitle: "Guests arrived? The bed is ready",
     lifeText: "Take it out of the bag, unfold, make the bed. In the morning fold it back into the wardrobe.",
@@ -1116,15 +1147,23 @@ const I18N = {
   function openLb(srcs, i) {
     lbTrack.textContent = "";
     srcs.forEach(src => {
-      const f = document.createElement("figure"), im = document.createElement("img");
-      im.src = src; im.alt = ""; f.appendChild(im); lbTrack.appendChild(f);
+      const f = document.createElement("figure"), isVid = /\.mp4$/.test(src);
+      const el = document.createElement(isVid ? "video" : "img");
+      if (isVid) Object.assign(el, { muted: true, loop: true, playsInline: true, controls: true, preload: "metadata", poster: src.replace(/\.mp4$/, ".jpg") });
+      else el.alt = "";
+      el.src = src; f.appendChild(el); lbTrack.appendChild(f);
     });
     lb.showModal();
     lbTrack.scrollLeft = i * lbTrack.clientWidth;
     lbCount();
   }
   const lbIdx = () => Math.round(lbTrack.scrollLeft / lbTrack.clientWidth);
-  function lbCount() { count.textContent = (lbIdx() + 1) + " / " + lbTrack.children.length; }
+  function lbCount() {
+    const i = lbIdx();
+    count.textContent = (i + 1) + " / " + lbTrack.children.length;
+    /* играет только видео на текущем слайде */
+    [...lbTrack.children].forEach((f, j) => { const v = f.querySelector("video"); if (v) j === i ? v.play().catch(() => {}) : v.pause(); });
+  }
   function lbGo(d) {
     const n = lbTrack.children.length, i = (lbIdx() + d + n) % n;
     lbTrack.scrollTo({ left: i * lbTrack.clientWidth, behavior: "smooth" });
@@ -1133,10 +1172,20 @@ const I18N = {
   $(".lb-prev").addEventListener("click", () => lbGo(-1));
   $(".lb-next").addEventListener("click", () => lbGo(1));
   $(".lb-x").addEventListener("click", () => lb.close());
-  lbTrack.addEventListener("click", e => { if (e.target.tagName !== "IMG") lb.close(); });
+  lbTrack.addEventListener("click", e => { if (!/^(IMG|VIDEO)$/.test(e.target.tagName)) lb.close(); });
+  lb.addEventListener("close", () => { lbTrack.textContent = ""; });
   lb.addEventListener("keydown", e => { if (e.key === "ArrowLeft") lbGo(-1); if (e.key === "ArrowRight") lbGo(1); });
   const ugcBtns = $$("#ugc button");
   ugcBtns.forEach((b, i) => b.addEventListener("click", () => openLb(ugcBtns.map(x => x.querySelector("img").src), i)));
+  const mediaBtns = $$("#media-grid button");
+  mediaBtns.forEach((b, i) => b.addEventListener("click", () => openLb(mediaBtns.map(x => x.dataset.src), i)));
+  /* видео в сетке крутятся без звука, только пока видны на экране */
+  if ("IntersectionObserver" in window) {
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      const v = e.target; e.isIntersecting && !lb.open ? v.play().catch(() => {}) : v.pause();
+    }), { threshold: .4 });
+    $$("#media-grid video").forEach(v => io.observe(v));
+  }
   const galImgs = $$("#slides img");
   galImgs.forEach((im, i) => im.addEventListener("click", () => openLb(galImgs.map(x => x.src), i)));
 
