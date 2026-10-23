@@ -81,7 +81,7 @@ def parse_config(js):
         return m.group(1) if m else ""
 
     return {"priceRetail": num("priceRetail"), "priceOld": num("priceOld"),
-            "priceWholesale": num("priceWholesale"), "wholesaleMin": num("wholesaleMin"),
+            "priceWholesale": num("priceWholesale"), "pricePair": num("pricePair"), "wholesaleMin": num("wholesaleMin"),
             "deliveryTbilisi": num("deliveryTbilisi"), "brand": txt("brand"), "seller": txt("seller"),
             "id": txt("id"), "address": txt("address"), "email": txt("email")}
 
@@ -107,6 +107,7 @@ def build(lang):
     def fill(s):
         pairs = {"{delivery}": money(C["deliveryTbilisi"]) if C["deliveryTbilisi"] > 0 else t["deliveryFree"],
                  "{brand}": C["brand"], "{min}": str(C["wholesaleMin"]), "{price}": money(C["priceWholesale"]),
+                 "{pair}": money(C["pricePair"]), "{pairTotal}": money(C["pricePair"] * 2),
                  "{seller}": C["seller"], "{id}": C["id"], "{address}": C["address"], "{email}": C["email"]}
         for k, v in pairs.items():
             s = s.replace(k, v)

@@ -604,8 +604,8 @@
       </div>
       <div class="price-block">
         <span class="price-old" id="price-old">249 ₾</span>
-        <span class="price" id="price-retail">149 ₾</span>
-        <span class="price-note" data-i18n="priceNote">Цена за штуку. Доставка по Тбилиси — 15 ₾, по остальной Грузии — курьерской службой. Оплата при получении.</span>
+        <span class="price" id="price-retail">179 ₾</span>
+        <span class="price-note" data-i18n="priceNote">Цена за штуку. Акция: 2 шт. — по 159 ₾ за штуку (318 ₾ за две). Доставка по Тбилиси — 15 ₾, по остальной Грузии — курьерской службой. Оплата при получении.</span>
       </div>
     </div>
     <div class="photo-wrap">
@@ -756,7 +756,7 @@
 </div>
 
 <div class="mobile-bar" id="mobile-bar">
-  <span class="bar-prices"><span class="bar-price-old" id="bar-price-old">249 ₾</span><span class="bar-price" id="bar-price">149 ₾</span></span>
+  <span class="bar-prices"><span class="bar-price-old" id="bar-price-old">249 ₾</span><span class="bar-price" id="bar-price">179 ₾</span></span>
   <a class="btn btn-primary" data-cta="chat-sticky" href="#" data-i18n="ctaLeaveNumber">Оставить номер</a>
   <a class="btn btn-primary" id="bar-form" href="#lead-top" data-i18n="ctaLeaveNumber">Оставить номер</a>
 </div>
@@ -808,11 +808,12 @@ const CONFIG = {
   videoUrl: "../video/odra.mp4",  // пусто = блок скрыт
   videoPoster: "../video/odra-poster.jpg",
 
-  priceRetail:    149,         // цена за штуку, ₾
+  priceRetail:    179,         // цена за штуку, ₾
   priceOld:       249,         // старая цена, ₾; пусто или = priceRetail — зачёркнутой цены нет.
                                // ВНИМАНИЕ: при откате править ещё и пре-рендер в разметке (span.price-old и span.bar-price-old)
   priceWholesale: 129,         // оптовая цена за штуку, ₾
   wholesaleMin:   5,           // от скольки штук опт
+  pricePair:      159,         // акция «2 шт.»: цена за штуку, ₾
   deliveryTbilisi: 15,         // доставка по Тбилиси, ₾ (0 = бесплатно)
 
   // Запасной канал на случай, если formFirst выключат. Пока formFirst = true,
@@ -840,7 +841,7 @@ const I18N = {
     langName: "ქართული",
     deliveryFree: "უფასოდ",
     ctaCall: "დარეკვა",
-    priceNote: "ერთი ცალის ფასი. მიწოდება თბილისში — {delivery}, საქართველოს სხვა ქალაქებში — კურიერით. გადახდა მიღებისას.",
+    priceNote: "ერთი ცალის ფასი. აქცია: 2 ცალი — {pair} ცალზე ({pairTotal} ორივე). მიწოდება თბილისში — {delivery}, საქართველოს სხვა ქალაქებში — კურიერით. გადახდა მიღებისას.",
     ctaOrder: "შეუკვეთეთ",
     altHero: "დასაკეცი საწოლი მატრასით: სასაწოლე ადგილი 190×68 სმ, კარკასის სიმაღლე 37 სმ, დატვირთვა 150 კგ-მდე",
     altUse: "გაშლილი დასაკეცი საწოლი ოთახში და იგივე საწოლი დაკეცილი, ფანჯარასთან",
@@ -909,7 +910,7 @@ const I18N = {
     langName: "Русский",
     deliveryFree: "бесплатно",
     ctaCall: "Позвонить",
-    priceNote: "Цена за штуку. Доставка по Тбилиси — {delivery}, по остальной Грузии — курьерской службой. Оплата при получении.",
+    priceNote: "Цена за штуку. Акция: 2 шт. — по {pair} за штуку ({pairTotal} за две). Доставка по Тбилиси — {delivery}, по остальной Грузии — курьерской службой. Оплата при получении.",
     ctaOrder: "Заказать",
     altHero: "Раскладушка с матрасом: спальное место 190×68 см, высота каркаса 37 см, нагрузка до 150 кг",
     altUse: "Разложенная раскладушка в комнате и она же сложенная, стоит у окна",
@@ -978,7 +979,7 @@ const I18N = {
     langName: "English",
     deliveryFree: "free",
     ctaCall: "Call us",
-    priceNote: "Price per unit. Delivery in Tbilisi — {delivery}, elsewhere in Georgia by courier. You pay on delivery.",
+    priceNote: "Price per unit. Offer: 2 units — {pair} each ({pairTotal} for both). Delivery in Tbilisi — {delivery}, elsewhere in Georgia by courier. You pay on delivery.",
     ctaOrder: "Order",
     altHero: "Folding bed with mattress: sleeping area 190×68 cm, frame height 37 cm, holds up to 150 kg",
     altUse: "The folding bed set up in a room, and the same bed folded and standing by the window",
@@ -1062,6 +1063,8 @@ const I18N = {
       "{brand}": CONFIG.brand,
       "{min}": String(CONFIG.wholesaleMin),
       "{price}": money(CONFIG.priceWholesale),
+      "{pair}": money(CONFIG.pricePair),
+      "{pairTotal}": money(CONFIG.pricePair * 2),
       "{seller}": CONFIG.legal.seller,
       "{id}": CONFIG.legal.id,
       "{address}": CONFIG.legal.address,

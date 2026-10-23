@@ -337,8 +337,8 @@
     <div class="price-block">
       <div class="price-row">
         <span class="price-old" id="price-old" data-old>249 ₾</span>
-        <span class="price" id="price-retail">149 ₾</span>
-        <span class="off-chip" data-off data-old>−40%</span>
+        <span class="price" id="price-retail">179 ₾</span>
+        <span class="off-chip" data-off data-old>−28%</span>
       </div>
       <p class="inline-cta cta-stack">
         <a class="pill pill--wide" data-cta="chat" href="#lead-top" data-i18n="ctaLeaveNumber">Leave your number</a>
@@ -347,10 +347,10 @@
     </div>
     <figure class="hero-media bleed">
       <img id="img-hero" src="../../img/v2_hero.jpg" alt="The folding bed set up in a room, and the same bed folded and standing by the window" width="1080" height="1080" fetchpriority="high" data-i18n-alt="altUse">
-      <span class="burst" data-old><span data-off>−40%</span></span>
+      <span class="burst" data-old><span data-off>−28%</span></span>
       <span class="gift-chip"><svg width="20" height="20" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10h18v11H3zM2 6h20v4H2zM12 6v15M12 6c-1.5-3-5-3.5-5.5-1.5S9 6 12 6zm0 0c1.5-3 5-3.5 5.5-1.5S15 6 12 6z" fill="none" stroke="#111" stroke-width="2" stroke-linejoin="round"/></svg><span data-i18n="giftChip">Free carry bag</span></span>
     </figure>
-    <p class="price-note" data-i18n="priceNote">Price per unit. Delivery in Tbilisi — 15 ₾, elsewhere in Georgia by courier. You pay on delivery.</p>
+    <p class="price-note" data-i18n="priceNote">Price per unit. Offer: 2 units — 159 ₾ each (318 ₾ for both). Delivery in Tbilisi — 15 ₾, elsewhere in Georgia by courier. You pay on delivery.</p>
   </section>
 
   <section class="sec sec--tight">
@@ -432,11 +432,11 @@
       <img class="offer-img" src="../../img/v2_thumb.jpg" alt="" width="520" height="390" loading="lazy">
       <div class="offer-body">
         <p class="offer-name" data-i18n="offer1Name">1 folding bed</p>
-        <p class="offer-price"><span class="price-old" data-money="priceOld" data-old>249 ₾</span><span data-money="priceRetail">149 ₾</span><span class="per" data-i18n="perUnit">each</span></p>
+        <p class="offer-price"><span class="price-old" data-money="priceOld" data-old>249 ₾</span><span data-money="priceRetail">179 ₾</span><span class="per" data-i18n="perUnit">each</span></p>
         <p class="offer-sub" data-i18n="offer1Sub">Free carry bag · pay on delivery</p>
         <p class="inline-cta"><a class="pill pill--sm" data-cta="chat-book" href="#lead-form" data-i18n="ctaOrder">Order</a></p>
       </div>
-      <span class="burst burst--sm" data-old><span data-off>−40%</span></span>
+      <span class="burst burst--sm" data-old><span data-off>−28%</span></span>
     </div>
     <div class="offer">
       <div class="offer-img offer-img--x5" aria-hidden="true"><span>×<span data-num="wholesaleMin">5</span></span></div>
@@ -511,7 +511,7 @@
 </div>
 
 <div class="mobile-bar" id="mobile-bar">
-  <span class="bar-prices"><span class="bar-price-old" id="bar-price-old" data-old>249 ₾</span><span class="bar-price" id="bar-price">149 ₾</span></span>
+  <span class="bar-prices"><span class="bar-price-old" id="bar-price-old" data-old>249 ₾</span><span class="bar-price" id="bar-price">179 ₾</span></span>
   <a class="pill" data-cta="chat-sticky" href="#lead-top" data-i18n="ctaLeaveNumber">Leave your number</a>
   <a class="pill" id="bar-form" href="#lead-top" data-i18n="ctaLeaveNumber" hidden>Leave your number</a>
 </div>
@@ -563,11 +563,12 @@ const CONFIG = {
   videoUrl: "../../video/odra.mp4",  // пусто = блок скрыт
   videoPoster: "../../video/odra-poster.jpg",
 
-  priceRetail:    149,         // цена за штуку, ₾
+  priceRetail:    179,         // цена за штуку, ₾
   priceOld:       249,         // старая цена, ₾; пусто или = priceRetail — зачёркнутой цены нет.
                                // ВНИМАНИЕ: при откате править ещё и пре-рендер в разметке (span.price-old и span.bar-price-old)
   priceWholesale: 129,         // оптовая цена за штуку, ₾
   wholesaleMin:   5,           // от скольки штук опт
+  pricePair:      159,         // акция «2 шт.»: цена за штуку, ₾
   deliveryTbilisi: 15,         // доставка по Тбилиси, ₾ (0 = бесплатно)
 
   // Запасной канал на случай, если formFirst выключат. Пока formFirst = true,
@@ -620,7 +621,7 @@ const I18N = {
     langName: "ქართული",
     deliveryFree: "უფასოდ",
     ctaCall: "დარეკვა",
-    priceNote: "ერთი ცალის ფასი. მიწოდება თბილისში — {delivery}, საქართველოს სხვა ქალაქებში — კურიერით. გადახდა მიღებისას.",
+    priceNote: "ერთი ცალის ფასი. აქცია: 2 ცალი — {pair} ცალზე ({pairTotal} ორივე). მიწოდება თბილისში — {delivery}, საქართველოს სხვა ქალაქებში — კურიერით. გადახდა მიღებისას.",
     ctaOrder: "შეუკვეთეთ",
     altHero: "დასაკეცი საწოლი მატრასით: სასაწოლე ადგილი 190×68 სმ, კარკასის სიმაღლე 37 სმ, დატვირთვა 150 კგ-მდე",
     altUse: "გაშლილი დასაკეცი საწოლი ოთახში და იგივე საწოლი დაკეცილი, ფანჯარასთან",
@@ -714,7 +715,7 @@ const I18N = {
     langName: "Русский",
     deliveryFree: "бесплатно",
     ctaCall: "Позвонить",
-    priceNote: "Цена за штуку. Доставка по Тбилиси — {delivery}, по остальной Грузии — курьерской службой. Оплата при получении.",
+    priceNote: "Цена за штуку. Акция: 2 шт. — по {pair} за штуку ({pairTotal} за две). Доставка по Тбилиси — {delivery}, по остальной Грузии — курьерской службой. Оплата при получении.",
     ctaOrder: "Заказать",
     altHero: "Раскладушка с матрасом: спальное место 190×68 см, высота каркаса 37 см, нагрузка до 150 кг",
     altUse: "Разложенная раскладушка в комнате и она же сложенная, стоит у окна",
@@ -808,7 +809,7 @@ const I18N = {
     langName: "English",
     deliveryFree: "free",
     ctaCall: "Call us",
-    priceNote: "Price per unit. Delivery in Tbilisi — {delivery}, elsewhere in Georgia by courier. You pay on delivery.",
+    priceNote: "Price per unit. Offer: 2 units — {pair} each ({pairTotal} for both). Delivery in Tbilisi — {delivery}, elsewhere in Georgia by courier. You pay on delivery.",
     ctaOrder: "Order",
     altHero: "Folding bed with mattress: sleeping area 190×68 cm, frame height 37 cm, holds up to 150 kg",
     altUse: "The folding bed set up in a room, and the same bed folded and standing by the window",
@@ -892,6 +893,8 @@ const I18N = {
       "{brand}": CONFIG.brand,
       "{min}": String(CONFIG.wholesaleMin),
       "{price}": money(CONFIG.priceWholesale),
+      "{pair}": money(CONFIG.pricePair),
+      "{pairTotal}": money(CONFIG.pricePair * 2),
       "{seller}": CONFIG.legal.seller,
       "{id}": CONFIG.legal.id,
       "{address}": CONFIG.legal.address,
