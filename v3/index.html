@@ -189,7 +189,8 @@
 
   /* ---------- sections ---------- */
   .hero2 { position: relative; border-radius: var(--radius); overflow: hidden; }
-  .hero2 img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+  .hero2 img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: center 65%; }
+  @media (max-width: 759px) { .hero2 img { aspect-ratio: 4 / 5; } }
   .hero2 .cap {
     position: absolute; inset: auto 0 0 0; padding: 60px 20px 20px; color: #fff;
     background: linear-gradient(transparent, rgba(0,0,0,.7));
@@ -464,7 +465,7 @@
   <!-- ======= лайфстайл ======= -->
   <section>
     <div class="hero2">
-      <img src="form/r2.jpg" alt="" loading="lazy">
+      <img src="form/life.jpg" alt="" loading="lazy">
       <div class="cap">
         <h2 data-i18n="lifeTitle"></h2>
         <p data-i18n="lifeText"></p>
@@ -1164,8 +1165,8 @@ const I18N = {
       const el = document.createElement(isVid ? "video" : "img");
       if (isVid) Object.assign(el, { muted: true, loop: true, playsInline: true, controls: true, preload: "metadata", poster: src.replace(/\.mp4$/, ".jpg") });
       else el.alt = "";
-      /* обложка из лид-формы: в полноэкранном просмотре без размытых полей */
-      el.src = src.replace(/\/hero\.jpg$/, "/hero-full.jpg"); f.appendChild(el); lbTrack.appendChild(f);
+      /* картинки из лид-формы: в полноэкранном просмотре оригиналы 3:4 без размытых полей */
+      el.src = src.replace(/\/(hero|p\d)\.jpg$/, "/$1-full.jpg"); f.appendChild(el); lbTrack.appendChild(f);
     });
     lb.showModal();
     lbTrack.scrollLeft = i * lbTrack.clientWidth;
