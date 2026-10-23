@@ -177,12 +177,13 @@
   .media-grid img, .media-grid video { width: 100%; height: 100%; object-fit: cover; display: block; }
   .media-grid .play { position: absolute; right: 8px; top: 8px; width: 28px; height: 28px; border-radius: 50%; background: rgba(0,0,0,.55); color: #fff; font-size: 12px; display: grid; place-items: center; }
   .media-sub { text-align: center; color: var(--muted); margin: 6px 0 0; font-size: 15px; }
-  .ugc-title { font-size: 13px; font-weight: 700; margin: 18px 0 8px; }
-  .ugc { display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
-  .ugc::-webkit-scrollbar { display: none; }
-  .ugc button { flex: 0 0 31%; aspect-ratio: 3 / 4; border-radius: 12px; overflow: hidden; scroll-snap-align: start; padding: 0; border: 0; background: var(--soft); cursor: zoom-in; position: relative; }
-  .ugc img, .ugc video { width: 100%; height: 100%; object-fit: cover; }
-  .ugc .src { position: absolute; left: 6px; bottom: 6px; background: rgba(0,0,0,.6); color: #fff; font-size: 10px; border-radius: 4px; padding: 1px 5px; }
+  .kit { margin-top: 18px; border: 1px solid var(--line, #eee); border-radius: 14px; padding: 12px; }
+  .kit-title { font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+  .kit ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; text-align: center; }
+  .kit li { background: var(--soft); border-radius: 10px; padding: 10px 6px; font-size: 13px; line-height: 1.25; }
+  .kit li span { display: block; font-size: 22px; margin-bottom: 4px; }
+  .kit li b { display: block; }
+  .kit li small { color: var(--muted); font-size: 11.5px; }
 
   .paybox { display: flex; gap: 10px; align-items: center; justify-content: center; margin-top: 14px; padding: 10px; border-radius: 12px; background: var(--soft); font-size: 14px; font-weight: 600; text-align: center; }
 
@@ -215,8 +216,8 @@
   .compare { margin-top: 22px; display: grid; grid-template-columns: 1.1fr 1fr 1fr; font-size: 14px; border-radius: var(--radius); overflow: hidden; }
   .compare div { padding: 12px 10px; border-bottom: 1px solid var(--line); display: flex; align-items: center; }
   .compare .h { font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: .04em; border-bottom: 0; }
-  .compare .us { background: var(--accent-soft); color: var(--accent-2); font-weight: 700; justify-content: center; text-align: center; }
-  .compare .them { color: var(--muted); justify-content: center; text-align: center; }
+  .compare .us { background: #e6f6ea; color: #1e7a3a; font-weight: 700; justify-content: center; text-align: center; }
+  .compare .them { background: var(--accent-soft); color: var(--accent-2); font-weight: 700; justify-content: center; text-align: center; }
   .compare .lbl { font-weight: 600; }
 
   .rv-head { display: grid; gap: 18px; margin-top: 22px; align-items: center; }
@@ -447,11 +448,13 @@
         <li data-i18n="c3"></li>
       </ul>
 
-      <div class="ugc-title" data-i18n="ugcTitle"></div>
-      <div class="ugc" id="ugc">
-        <button type="button"><img src="form/r2.jpg" alt="" loading="lazy"></button>
-        <button type="button"><img src="form/r1.jpg" alt="" loading="lazy"></button>
-        <button type="button"><img src="form/r3.jpg" alt="" loading="lazy"></button>
+      <div class="kit">
+        <div class="kit-title" data-i18n="kitTitle"></div>
+        <ul>
+          <li><span>🛏️</span><b data-i18n="kit1"></b><small data-i18n="kit1s"></small></li>
+          <li><span>☁️</span><b data-i18n="kit2"></b><small data-i18n="kit2s"></small></li>
+          <li><span>🎁</span><b data-i18n="kit3"></b><small data-i18n="kit3s"></small></li>
+        </ul>
       </div>
 
       <div class="paybox">💵 <span data-i18n="paybox"></span></div>
@@ -747,7 +750,10 @@ const I18N = {
     c1: "იშლება ერთი მოძრაობით, აწყობა არ სჭირდება",
     c2: "6 სმ მატრასი უკვე კომპლექტშია",
     c3: "მეტალის კარკასი 150 კგ-მდე, არ ჭრიალებს",
-    ugcTitle: "მყიდველების ფოტოები",
+    kitTitle: "კომპლექტში",
+    kit1: "გასაშლელი საწოლი", kit1s: "ლითონის კარკასი, 150\u00a0კგ-მდე",
+    kit2: "ლეიბი", kit2s: "6 სმ, სინთეპონი",
+    kit3: "ჩანთა", kit3s: "საჩუქრად, 21×17×101 სმ",
     mediaTitle: "მყიდველების ფოტოები",
     mediaSub: "ნამდვილი ფოტოები მყიდველებისგან. დააჭირეთ სანახავად.",
     paybox: "გადახდა მხოლოდ ნაღდი ფულით, კურიერთან მიღებისას",
@@ -841,7 +847,10 @@ const I18N = {
     c1: "Раскладывается одним движением, без сборки",
     c2: "Матрас 6 см уже в комплекте",
     c3: "Металлический каркас до 150 кг, не скрипит",
-    ugcTitle: "Фото покупателей",
+    kitTitle: "В комплекте",
+    kit1: "Раскладушка", kit1s: "металлический каркас, до 150\u00a0кг",
+    kit2: "Матрас", kit2s: "6 см, синтепон",
+    kit3: "Сумка-чехол", kit3s: "в подарок, 21×17×101 см",
     mediaTitle: "Фото покупателей",
     mediaSub: "Настоящие фото от покупателей. Нажмите, чтобы посмотреть.",
     paybox: "Оплата только наличными курьеру при получении",
@@ -935,7 +944,10 @@ const I18N = {
     c1: "Opens in one move, no assembly",
     c2: "6 cm mattress included",
     c3: "Steel frame holds up to 150 kg, no creaking",
-    ugcTitle: "Buyer photos",
+    kitTitle: "In the box",
+    kit1: "Folding bed", kit1s: "metal frame, up to 150\u00a0kg",
+    kit2: "Mattress", kit2s: "6 cm, padded",
+    kit3: "Carry bag", kit3s: "free, 21×17×101 cm",
     mediaTitle: "Buyer photos",
     mediaSub: "Real photos from buyers. Tap to view.",
     paybox: "Cash only, paid to the courier on delivery",
@@ -1173,8 +1185,6 @@ const I18N = {
   lbTrack.addEventListener("click", e => { if (!/^(IMG|VIDEO)$/.test(e.target.tagName)) lb.close(); });
   lb.addEventListener("close", () => { lbTrack.textContent = ""; });
   lb.addEventListener("keydown", e => { if (e.key === "ArrowLeft") lbGo(-1); if (e.key === "ArrowRight") lbGo(1); });
-  const ugcBtns = $$("#ugc button");
-  ugcBtns.forEach((b, i) => b.addEventListener("click", () => openLb(ugcBtns.map(x => x.querySelector("img").src), i)));
   const mediaBtns = $$("#media-grid button");
   mediaBtns.forEach((b, i) => b.addEventListener("click", () => openLb(mediaBtns.map(x => x.dataset.src), i)));
   /* видео в сетке крутятся без звука, только пока видны на экране */
