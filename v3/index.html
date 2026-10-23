@@ -227,6 +227,9 @@
   .rv .who b { font-size: 15px; }
   .rv p { margin: 8px 0 0; }
   .rv .ver { font-size: 12px; color: var(--ok); font-weight: 600; margin-top: 8px; }
+  .rv-ph { display: flex; gap: 8px; margin-top: 10px; }
+  .rv-ph button { width: 76px; height: 96px; padding: 0; border: 0; border-radius: 10px; overflow: hidden; background: var(--soft); cursor: zoom-in; }
+  .rv-ph img { width: 100%; height: 100%; object-fit: cover; }
   .rv-src { font-size: 13px; color: var(--muted); text-align: center; margin-top: 14px; }
 
   .b2b { background: var(--ink); color: #fff; border-radius: var(--radius); padding: 24px 20px; display: grid; gap: 12px; }
@@ -275,12 +278,12 @@
   .dr-body { overflow-y: auto; padding: 14px 16px 18px; display: grid; gap: 14px; }
   .dr-strip { background: var(--soft); border-radius: 10px; padding: 8px 12px; font-size: 13.5px; text-align: center; font-weight: 600; }
   .dr-loved { display: flex; gap: 10px; align-items: center; font-size: 13.5px; }
-  .ozon-card {
+  .score-card {
     display: flex; align-items: center; gap: 12px; background: linear-gradient(135deg, #1a1a1a, #3a2d27);
     color: #fff; border-radius: 12px; padding: 12px 14px;
   }
-  .ozon-card .sc { font-size: 30px; font-weight: 800; line-height: 1; }
-  .ozon-card small { opacity: .8; display: block; }
+  .score-card .sc { font-size: 30px; font-weight: 800; line-height: 1; }
+  .score-card small { opacity: .8; display: block; }
   .line-item { display: grid; grid-template-columns: 64px 1fr auto; gap: 12px; align-items: center; }
   .line-item img { width: 64px; height: 64px; border-radius: 10px; object-fit: cover; background: var(--soft); }
   .line-item .t { font-weight: 700; font-size: 15px; }
@@ -311,10 +314,17 @@
   .bot { position: absolute; left: -9999px; }
 
   /* lightbox */
-  dialog.lb { border: 0; padding: 0; background: transparent; max-width: 94vw; max-height: 92dvh; }
-  dialog.lb::backdrop { background: rgba(0,0,0,.85); }
-  dialog.lb img { max-width: 94vw; max-height: 86dvh; border-radius: 10px; }
-  dialog.lb p { color: #fff; text-align: center; font-size: 13px; margin: 8px 0 0; }
+  dialog.lb { border: 0; padding: 0; background: rgba(0,0,0,.94); width: 100vw; max-width: 100vw; height: 100dvh; max-height: 100dvh; margin: 0; overflow: hidden; }
+  dialog.lb::backdrop { background: rgba(0,0,0,.92); }
+  .lb-track { display: flex; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .lb-track::-webkit-scrollbar { display: none; }
+  .lb-track figure { flex: 0 0 100%; margin: 0; scroll-snap-align: center; display: grid; place-items: center; padding: 56px 12px; }
+  .lb-track img { max-width: 100%; max-height: calc(100dvh - 112px); object-fit: contain; border-radius: 10px; }
+  .lb-nav, .lb-x { position: absolute; border: 0; background: rgba(255,255,255,.16); color: #fff; cursor: pointer; border-radius: 50%; width: 44px; height: 44px; font-size: 28px; line-height: 1; display: grid; place-items: center; }
+  .lb-nav { top: 50%; transform: translateY(-50%); }
+  .lb-prev { left: 10px; } .lb-next { right: 10px; }
+  .lb-x { top: 10px; right: 10px; }
+  .lb-count { position: absolute; top: 20px; left: 0; right: 0; text-align: center; color: #fff; font-size: 14px; pointer-events: none; }
 
   /* cookie */
   #cookie-bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 50; background: var(--ink); color: #fff; padding: 12px 16px; font-size: 13px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; justify-content: center; }
@@ -345,28 +355,22 @@
   <div class="product">
     <div class="gallery">
       <div class="main" id="slides">
-        <div class="slide">
-          <img src="../img/b1.jpg" alt="" data-i18n-alt="altMain" fetchpriority="high">
-          <div class="slogan" data-i18n="slogan"></div>
-          <div class="badge-kg"><b>150</b><span data-i18n="kgLabel"></span></div>
-        </div>
-        <div class="slide"><img src="../img/card_ka.jpg" data-src-lang="../img/card_{lang}.jpg" alt="" loading="lazy"></div>
+        <div class="slide"><img src="form/ka/hero.jpg" data-src-lang="form/{lang}/hero.jpg" alt="" fetchpriority="high"></div>
+        <div class="slide"><img src="form/ka/p1.jpg" data-src-lang="form/{lang}/p1.jpg" alt="" loading="lazy"></div>
+        <div class="slide"><img src="form/ka/p2.jpg" data-src-lang="form/{lang}/p2.jpg" alt="" loading="lazy"></div>
+        <div class="slide"><img src="form/ka/p3.jpg" data-src-lang="form/{lang}/p3.jpg" alt="" loading="lazy"></div>
+        <div class="slide"><img src="form/ka/p4.jpg" data-src-lang="form/{lang}/p4.jpg" alt="" loading="lazy"></div>
+        <div class="slide"><img src="form/ka/p5.jpg" data-src-lang="form/{lang}/p5.jpg" alt="" loading="lazy"></div>
         <div class="slide"><video src="../video/odra.mp4" poster="../video/odra-poster.jpg" muted loop playsinline preload="none"></video></div>
-        <div class="slide"><img src="ozon/man-lying.jpg" alt="" loading="lazy"></div>
-        <div class="slide"><img src="../img/storage_ka.jpg" data-src-lang="../img/storage_{lang}.jpg" alt="" loading="lazy"></div>
-        <div class="slide"><img src="../img/mattress_ka.jpg" data-src-lang="../img/mattress_{lang}.jpg" alt="" loading="lazy"></div>
-        <div class="slide"><img src="../img/carry_ka.jpg" data-src-lang="../img/carry_{lang}.jpg" alt="" loading="lazy"></div>
-        <div class="slide"><img src="../img/frame_ka.jpg" data-src-lang="../img/frame_{lang}.jpg" alt="" loading="lazy"></div>
       </div>
       <div class="thumbs" id="thumbs">
-        <button type="button"><img src="../img/b1.jpg" alt=""></button>
-        <button type="button"><img src="../img/card_ka.jpg" data-src-lang="../img/card_{lang}.jpg" alt=""></button>
+        <button type="button"><img src="form/ka/hero.jpg" data-src-lang="form/{lang}/hero.jpg" alt=""></button>
+        <button type="button"><img src="form/ka/p1.jpg" data-src-lang="form/{lang}/p1.jpg" alt=""></button>
+        <button type="button"><img src="form/ka/p2.jpg" data-src-lang="form/{lang}/p2.jpg" alt=""></button>
+        <button type="button"><img src="form/ka/p3.jpg" data-src-lang="form/{lang}/p3.jpg" alt=""></button>
+        <button type="button"><img src="form/ka/p4.jpg" data-src-lang="form/{lang}/p4.jpg" alt=""></button>
+        <button type="button"><img src="form/ka/p5.jpg" data-src-lang="form/{lang}/p5.jpg" alt=""></button>
         <button type="button" class="play"><img src="../video/odra-poster.jpg" alt=""></button>
-        <button type="button"><img src="ozon/man-lying.jpg" alt=""></button>
-        <button type="button"><img src="../img/storage_ka.jpg" data-src-lang="../img/storage_{lang}.jpg" alt=""></button>
-        <button type="button"><img src="../img/mattress_ka.jpg" data-src-lang="../img/mattress_{lang}.jpg" alt=""></button>
-        <button type="button"><img src="../img/carry_ka.jpg" data-src-lang="../img/carry_{lang}.jpg" alt=""></button>
-        <button type="button"><img src="../img/frame_ka.jpg" data-src-lang="../img/frame_{lang}.jpg" alt=""></button>
       </div>
     </div>
 
@@ -386,9 +390,9 @@
 
       <div class="loved">
         <div class="avatars">
-          <img src="ozon/man-sitting.jpg" alt="">
-          <img src="ozon/mattress-box.jpg" alt="">
-          <img src="ozon/living-room.jpg" alt="">
+          <img src="form/r1.jpg" alt="">
+          <img src="form/r2.jpg" alt="">
+          <img src="form/r3.jpg" alt="">
         </div>
         <span data-i18n-html="loved"></span>
       </div>
@@ -436,14 +440,9 @@
 
       <div class="ugc-title" data-i18n="ugcTitle"></div>
       <div class="ugc" id="ugc">
-        <button type="button" data-full="ozon/man-lying.jpg"><img src="ozon/man-lying.jpg" alt="" loading="lazy"><span class="src">Ozon</span></button>
-        <button type="button" data-full="ozon/mattress-box.jpg"><img src="ozon/mattress-box.jpg" alt="" loading="lazy"><span class="src">Ozon</span></button>
-        <button type="button" data-full="ozon/man-sitting.jpg"><img src="ozon/man-sitting.jpg" alt="" loading="lazy"><span class="src">Ozon</span></button>
-        <button type="button" data-full="ozon/living-room.jpg"><img src="ozon/living-room.jpg" alt="" loading="lazy"><span class="src">Ozon</span></button>
-        <button type="button" data-full="ozon/folded.jpg"><img src="ozon/folded.jpg" alt="" loading="lazy"><span class="src">Ozon</span></button>
-        <button type="button" data-full="ozon/man-top.jpg"><img src="ozon/man-top.jpg" alt="" loading="lazy"><span class="src">Ozon</span></button>
-        <button type="button" data-full="ozon/mattress-top.jpg"><img src="ozon/mattress-top.jpg" alt="" loading="lazy"><span class="src">Ozon</span></button>
-        <button type="button" data-full="ozon/side-kids.jpg"><img src="ozon/side-kids.jpg" alt="" loading="lazy"><span class="src">Ozon</span></button>
+        <button type="button"><img src="form/r2.jpg" alt="" loading="lazy"></button>
+        <button type="button"><img src="form/r1.jpg" alt="" loading="lazy"></button>
+        <button type="button"><img src="form/r3.jpg" alt="" loading="lazy"></button>
       </div>
 
       <div class="paybox">💵 <span data-i18n="paybox"></span></div>
@@ -453,7 +452,7 @@
   <!-- ======= лайфстайл ======= -->
   <section>
     <div class="hero2">
-      <img src="../img/own43.jpg" alt="" loading="lazy">
+      <img src="form/r2.jpg" alt="" loading="lazy">
       <div class="cap">
         <h2 data-i18n="lifeTitle"></h2>
         <p data-i18n="lifeText"></p>
@@ -517,7 +516,6 @@
       </div>
     </div>
     <div class="reviews" id="reviews-list"></div>
-    <p class="rv-src" data-i18n="rvSrc"></p>
   </section>
 
   <!-- ======= опт ======= -->
@@ -566,18 +564,18 @@
       <div class="dr-strip" data-dr="deadline"></div>
       <div class="dr-loved">
         <div class="avatars">
-          <img src="ozon/man-sitting.jpg" alt="">
-          <img src="ozon/mattress-box.jpg" alt="">
-          <img src="ozon/living-room.jpg" alt="">
+          <img src="form/r1.jpg" alt="">
+          <img src="form/r2.jpg" alt="">
+          <img src="form/r3.jpg" alt="">
         </div>
         <span data-i18n-html="loved"></span>
       </div>
-      <div class="ozon-card">
+      <div class="score-card">
         <div class="sc">4,8</div>
         <div><span class="stars">★★★★★</span><small data-i18n="ozonCard"></small></div>
       </div>
       <div class="line-item">
-        <img src="../img/b1.jpg" alt="">
+        <img src="form/ka/hero.jpg" data-src-lang="form/{lang}/hero.jpg" alt="">
         <div>
           <div class="t" data-i18n="itemName"></div>
           <div class="qty">
@@ -619,7 +617,13 @@
   </div>
 </dialog>
 
-<dialog class="lb" id="lb"><img alt=""><p data-i18n="lbNote"></p></dialog>
+<dialog class="lb" id="lb">
+  <div class="lb-track" id="lb-track"></div>
+  <button type="button" class="lb-nav lb-prev" aria-label="‹">‹</button>
+  <button type="button" class="lb-nav lb-next" aria-label="›">›</button>
+  <button type="button" class="lb-x" aria-label="×">×</button>
+  <div class="lb-count" id="lb-count"></div>
+</dialog>
 
 <div id="cookie-bar" hidden>
   <span data-i18n="cookieText"></span>
@@ -651,8 +655,16 @@ const CONFIG = {
   }
 };
 
-/* Отзывы — реальные, с карточки этой модели на Ozon (товар 1353693495). */
+/* Отзывы — реальные, с карточки этой модели на Ozon (товар 1353693495). На странице источник не пишем (решение Родиона 23.10). */
 const REVIEWS = [
+  { n: "Оксана", d: "2026-05-12", ph: ["reviews/oksana-2.jpg", "reviews/oksana-1.jpg", "reviews/oksana-3.jpg"],
+    ru: "Брали для ребёнка, для гостей. Вполне крепкая, по цене недорого. Надо — разложил, не надо — сложил. В комплекте чехол, места занимает в сложенном виде мало.",
+    en: "Bought it for our child and for guests. Quite sturdy and inexpensive. Need it, unfold it; don't need it, fold it away. Comes with a cover and takes little space folded.",
+    ka: "ვიყიდეთ ბავშვისთვის და სტუმრებისთვის. საკმაოდ მყარია და ფასიც იაფია. გჭირდება — გაშალე, არ გჭირდება — დაკეცე. კომპლექტში ჩანთაა, დაკეცილი ცოტა ადგილს იკავებს." },
+  { n: "Татьяна А.", d: "2026-05-24", ph: ["reviews/tatyana-1.jpg", "reviews/tatyana-2.jpg"],
+    ru: "Пришла вовремя, в коробке. Всё целое, легко раскладывается, не тяжёлая. Спасибо продавцу.",
+    en: "Arrived on time, in a box. Everything intact, unfolds easily, not heavy. Thanks to the seller.",
+    ka: "დროულად მოვიდა, ყუთში. ყველაფერი მთელია, მარტივად იშლება, მძიმე არ არის. მადლობა გამყიდველს." },
   { n: "Ирина П.", d: "2026-07-27",
     ru: "Очень понравилась раскладушка, лежать удобно, конструкция не хлипкая, скрипа и шатания нет, хранение компактное в чехле, который пыль не пропускает. Рекомендую.",
     en: "Really liked this folding bed. It is comfortable to lie on, the frame is not flimsy, no creaking or wobbling, and it stores compactly in a cover that keeps the dust out. Recommend.",
@@ -669,7 +681,7 @@ const REVIEWS = [
     ru: "Прекрасная раскладушка, купили для гостей. Матрас мягкий. Самый главный плюс: очень мало занимает места в сложенном состоянии (убрали под кровать).",
     en: "A lovely folding bed, we bought it for guests. The mattress is soft. The biggest plus: it takes very little space folded (we keep it under the bed).",
     ka: "მშვენიერი საწოლია, სტუმრებისთვის ვიყიდეთ. მატრასი რბილია. მთავარი პლიუსი: დაკეცილი ძალიან ცოტა ადგილს იკავებს (საწოლის ქვეშ შევინახეთ)." },
-  { n: "Елена Д.", d: "2025-12-24",
+  { n: "Елена Д.", d: "2025-12-24", ph: ["reviews/elena-2.jpg", "reviews/elena-1.jpg"],
     ru: "Отличная раскладушка, сделана аккуратно, раскладывается одним жестом, складывается тоже одним действием, много места не занимает в сложенном виде, матрас тоже не тонкий. Рекомендую.",
     en: "Excellent folding bed, neatly made. It unfolds in one move and folds back just as easily, takes little space folded, and the mattress isn't thin. Recommend.",
     ka: "შესანიშნავი საწოლია, აკურატულად არის გაკეთებული. ერთი მოძრაობით იშლება და ასევე ერთი მოძრაობით იკეცება, დაკეცილი ცოტა ადგილს იკავებს, მატრასიც არ არის თხელი. გირჩევთ." },
@@ -695,11 +707,11 @@ const I18N = {
     slogan: "სტუმრისთვის. ერთ წუთში.",
     kgLabel: "კგ-მდე",
     altMain: "დასაკეცი საწოლი მატრასით ოთახში",
-    ratingLink: "2334 შეფასება Ozon-ზე",
+    ratingLink: "2334 შეფასება",
     h1: "დასაკეცი საწოლი მატრასით",
     sub: "მზა საძინებელი ადგილი სტუმრისთვის. იშლება ერთი მოძრაობით, ინახება კარადაში.",
     sale: "აქცია",
-    loved: "<b>1995 მყიდველმა</b> 5 ვარსკვლავი დაუსვა Ozon-ზე",
+    loved: "<b>1995 მყიდველმა</b> 5 ვარსკვლავი დაუსვა",
     offer: "აიღეთ ორი — <b>{pair} ცალი</b>. ეკონომია {save}",
     packsTitle: "აირჩიეთ რაოდენობა",
     p1n: "1 საწოლი", p1d: "ერთი სტუმრისთვის",
@@ -713,7 +725,7 @@ const I18N = {
     c1: "იშლება ერთი მოძრაობით, აწყობა არ სჭირდება",
     c2: "6 სმ მატრასი უკვე კომპლექტშია",
     c3: "მეტალის კარკასი 150 კგ-მდე, არ ჭრიალებს",
-    ugcTitle: "ფოტოები მყიდველებისგან (Ozon)",
+    ugcTitle: "მყიდველების ფოტოები",
     paybox: "გადახდა მხოლოდ ნაღდი ფულით, კურიერთან მიღებისას",
     lifeTitle: "სტუმრები მოვიდნენ? საწოლი მზადაა",
     lifeText: "ჩანთიდან ამოიღეთ, გაშალეთ, გადააფარეთ — დილით დაკეცეთ და კარადაში შეინახეთ.",
@@ -736,8 +748,7 @@ const I18N = {
     r5: "შენახვა", r5a: "ჩანთა 21×17×101", r5b: "დიდი შეკვრა",
     rvTitle: "რას წერენ მყიდველები",
     rvCount: "2334 შეფასება",
-    rvSrc: "ამ მოდელის შეფასებები Ozon-იდან (რუსეთი), თარგმნილია რუსულიდან.",
-    verified: "✓ შეძენილია Ozon-ზე",
+    verified: "✓ დადასტურებული შეძენა",
     b2bTitle: "ჰოსტელი, სასტუმრო ან ბანაკი?",
     b2bPrice: "{min} ცალიდან — {wholesale} ცალი",
     b2bText: "დიდ შეკვეთაზე ვადასა და მიწოდებას ინდივიდუალურად შევათანხმებთ WhatsApp-ში.",
@@ -757,7 +768,7 @@ const I18N = {
     drTitle: "თქვენი შეკვეთა",
     deadlineToday: "⏱ გააფორმეთ {left}-ში — მოგიტანთ დღესვე (თბილისი)",
     deadlineTomorrow: "🚚 მიწოდება თბილისში: {day}",
-    ozonCard: "2334 შეფასება ამ მოდელზე Ozon-ზე",
+    ozonCard: "2334 შეფასება",
     itemName: "დასაკეცი საწოლი მატრასით",
     upAdd1: "დაამატეთ კიდევ ერთი — თითოეული {pair} ღირს, ეკონომია {save}",
     upBtn: "+ კიდევ ერთი",
@@ -775,7 +786,6 @@ const I18N = {
     okText: "მალე მოგწერთ WhatsApp-ში. არ გინდათ ლოდინი? მოგვწერეთ თავად: +995 599 703 991",
     okWa: "მოგვწერეთ WhatsApp-ში",
     waText: "გამარჯობა! მინდა დასაკეცი საწოლი, {qty} ცალი.",
-    lbNote: "მყიდველის ფოტო Ozon-იდან",
     footer: "თბილისი. ფასები ლარშია.",
     legalLine: "გამყიდველი: {seller}, საიდენტიფიკაციო ნომერი {id}. მისამართი: {address}.",
     privacyLink: "კონფიდენციალურობის პოლიტიკა",
@@ -789,11 +799,11 @@ const I18N = {
     slogan: "Гостю. За минуту.",
     kgLabel: "кг нагрузка",
     altMain: "Раскладушка с матрасом в комнате",
-    ratingLink: "2334 отзыва на Ozon",
+    ratingLink: "2334 отзыва",
     h1: "Раскладушка с матрасом",
     sub: "Готовое спальное место для гостей. Раскладывается одним движением, хранится в шкафу.",
     sale: "Акция",
-    loved: "<b>1995 покупателей</b> поставили 5 звёзд на Ozon",
+    loved: "<b>1995 покупателей</b> поставили 5 звёзд",
     offer: "Возьмите две — <b>по {pair}</b> за штуку. Экономия {save}",
     packsTitle: "Выберите количество",
     p1n: "1 раскладушка", p1d: "для одного гостя",
@@ -807,7 +817,7 @@ const I18N = {
     c1: "Раскладывается одним движением, без сборки",
     c2: "Матрас 6 см уже в комплекте",
     c3: "Металлический каркас до 150 кг, не скрипит",
-    ugcTitle: "Фото покупателей (Ozon)",
+    ugcTitle: "Фото покупателей",
     paybox: "Оплата только наличными курьеру при получении",
     lifeTitle: "Приехали гости? Кровать готова",
     lifeText: "Достали из чехла, разложили, застелили. Утром сложили и убрали в шкаф.",
@@ -830,8 +840,7 @@ const I18N = {
     r5: "Хранение", r5a: "чехол 21×17×101", r5b: "большой свёрток",
     rvTitle: "Что пишут покупатели",
     rvCount: "2334 отзыва",
-    rvSrc: "Отзывы об этой модели с Ozon (Россия).",
-    verified: "✓ Куплено на Ozon",
+    verified: "✓ Подтверждённая покупка",
     b2bTitle: "Хостел, гостиница или лагерь?",
     b2bPrice: "От {min} штук — {wholesale} за штуку",
     b2bText: "Сроки и доставку партии согласуем в WhatsApp.",
@@ -851,7 +860,7 @@ const I18N = {
     drTitle: "Ваш заказ",
     deadlineToday: "⏱ Оформите за {left} — привезём сегодня (Тбилиси)",
     deadlineTomorrow: "🚚 Доставка по Тбилиси: {day}",
-    ozonCard: "2334 отзыва об этой модели на Ozon",
+    ozonCard: "2334 отзыва покупателей",
     itemName: "Раскладушка с матрасом",
     upAdd1: "Добавьте вторую — каждая будет по {pair}, экономия {save}",
     upBtn: "+ ещё одну",
@@ -869,7 +878,6 @@ const I18N = {
     okText: "Скоро напишем вам в WhatsApp. Не хотите ждать? Напишите нам сами: +995 599 703 991",
     okWa: "Написать в WhatsApp",
     waText: "Здравствуйте! Хочу раскладушку, {qty} шт.",
-    lbNote: "Фото покупателя с Ozon",
     footer: "Тбилиси. Цены в лари.",
     legalLine: "Продавец: {seller}, идентификационный номер {id}. Адрес: {address}.",
     privacyLink: "Политика конфиденциальности",
@@ -883,11 +891,11 @@ const I18N = {
     slogan: "For guests. In a minute.",
     kgLabel: "kg max load",
     altMain: "Folding bed with mattress in a room",
-    ratingLink: "2,334 reviews on Ozon",
+    ratingLink: "2,334 reviews",
     h1: "Folding bed with mattress",
     sub: "A ready spare bed for guests. Opens in one move, stores in a wardrobe.",
     sale: "Sale",
-    loved: "<b>1,995 buyers</b> gave it 5 stars on Ozon",
+    loved: "<b>1,995 buyers</b> gave it 5 stars",
     offer: "Take two — <b>{pair} each</b>. You save {save}",
     packsTitle: "Choose quantity",
     p1n: "1 bed", p1d: "for one guest",
@@ -901,7 +909,7 @@ const I18N = {
     c1: "Opens in one move, no assembly",
     c2: "6 cm mattress included",
     c3: "Steel frame holds up to 150 kg, no creaking",
-    ugcTitle: "Buyer photos (Ozon)",
+    ugcTitle: "Buyer photos",
     paybox: "Cash only, paid to the courier on delivery",
     lifeTitle: "Guests arrived? The bed is ready",
     lifeText: "Take it out of the bag, unfold, make the bed. In the morning fold it back into the wardrobe.",
@@ -924,8 +932,7 @@ const I18N = {
     r5: "Storage", r5a: "bag 21×17×101", r5b: "bulky bundle",
     rvTitle: "What buyers say",
     rvCount: "2,334 reviews",
-    rvSrc: "Reviews of this model from Ozon (Russia), translated from Russian.",
-    verified: "✓ Bought on Ozon",
+    verified: "✓ Verified purchase",
     b2bTitle: "Hostel, guesthouse or camp?",
     b2bPrice: "From {min} units — {wholesale} each",
     b2bText: "We agree timing and delivery for bulk orders on WhatsApp.",
@@ -945,7 +952,7 @@ const I18N = {
     drTitle: "Your order",
     deadlineToday: "⏱ Order within {left} — delivered today (Tbilisi)",
     deadlineTomorrow: "🚚 Tbilisi delivery: {day}",
-    ozonCard: "2,334 reviews of this model on Ozon",
+    ozonCard: "2,334 buyer reviews",
     itemName: "Folding bed with mattress",
     upAdd1: "Add a second one — each becomes {pair}, you save {save}",
     upBtn: "+ add one more",
@@ -963,7 +970,6 @@ const I18N = {
     okText: "We'll message you on WhatsApp shortly. Don't want to wait? Message us: +995 599 703 991",
     okWa: "Message on WhatsApp",
     waText: "Hello! I'd like the folding bed, {qty} pcs.",
-    lbNote: "Buyer photo from Ozon",
     footer: "Tbilisi. Prices in lari.",
     legalLine: "Seller: {seller}, ID number {id}. Address: {address}.",
     privacyLink: "Privacy policy",
@@ -1054,7 +1060,7 @@ const I18N = {
     $$(".langs button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
 
     const list = $("#reviews-list"); list.textContent = "";
-    REVIEWS.forEach(r => {
+    REVIEWS.slice().sort((a, b) => (b.ph ? 1 : 0) - (a.ph ? 1 : 0)).forEach(r => {
       const card = document.createElement("article"); card.className = "rv";
       const d = new Date(r.d + "T12:00:00");
       const date = d.toLocaleDateString(lang === "ka" ? "ka-GE" : lang === "ru" ? "ru-RU" : "en-GB", { day: "numeric", month: "long", year: "numeric" });
@@ -1063,6 +1069,15 @@ const I18N = {
       card.querySelector(".muted").textContent = date;
       card.querySelector("p").textContent = r[lang];
       card.querySelector(".ver").textContent = t.verified;
+      if (r.ph) {
+        const row = document.createElement("div"); row.className = "rv-ph";
+        r.ph.forEach((src, i) => {
+          const b = document.createElement("button"); b.type = "button";
+          const im = document.createElement("img"); im.src = src; im.alt = ""; im.loading = "lazy";
+          b.appendChild(im); b.addEventListener("click", () => openLb(r.ph, i)); row.appendChild(b);
+        });
+        card.insertBefore(row, card.querySelector(".ver"));
+      }
       list.appendChild(card);
     });
 
@@ -1096,12 +1111,34 @@ const I18N = {
   markThumb(0);
 
   /* ---------- фото покупателей: лайтбокс ---------- */
-  const lb = $("#lb");
-  $$("#ugc button").forEach(b => b.addEventListener("click", () => {
-    lb.querySelector("img").src = b.dataset.full;
+  /* лайтбокс-карусель: листается свайпом, стрелками и клавишами */
+  const lb = $("#lb"), lbTrack = $("#lb-track"), count = $("#lb-count");
+  function openLb(srcs, i) {
+    lbTrack.textContent = "";
+    srcs.forEach(src => {
+      const f = document.createElement("figure"), im = document.createElement("img");
+      im.src = src; im.alt = ""; f.appendChild(im); lbTrack.appendChild(f);
+    });
     lb.showModal();
-  }));
-  lb.addEventListener("click", () => lb.close());
+    lbTrack.scrollLeft = i * lbTrack.clientWidth;
+    lbCount();
+  }
+  const lbIdx = () => Math.round(lbTrack.scrollLeft / lbTrack.clientWidth);
+  function lbCount() { count.textContent = (lbIdx() + 1) + " / " + lbTrack.children.length; }
+  function lbGo(d) {
+    const n = lbTrack.children.length, i = (lbIdx() + d + n) % n;
+    lbTrack.scrollTo({ left: i * lbTrack.clientWidth, behavior: "smooth" });
+  }
+  lbTrack.addEventListener("scroll", lbCount, { passive: true });
+  $(".lb-prev").addEventListener("click", () => lbGo(-1));
+  $(".lb-next").addEventListener("click", () => lbGo(1));
+  $(".lb-x").addEventListener("click", () => lb.close());
+  lbTrack.addEventListener("click", e => { if (e.target.tagName !== "IMG") lb.close(); });
+  lb.addEventListener("keydown", e => { if (e.key === "ArrowLeft") lbGo(-1); if (e.key === "ArrowRight") lbGo(1); });
+  const ugcBtns = $$("#ugc button");
+  ugcBtns.forEach((b, i) => b.addEventListener("click", () => openLb(ugcBtns.map(x => x.querySelector("img").src), i)));
+  const galImgs = $$("#slides img");
+  galImgs.forEach((im, i) => im.addEventListener("click", () => openLb(galImgs.map(x => x.src), i)));
 
   /* ---------- пакеты ---------- */
   $$('input[name="pack"]').forEach(r => r.addEventListener("change", () => { qty = Number(r.value); renderCart(); }));
